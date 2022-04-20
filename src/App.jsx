@@ -6,8 +6,8 @@ import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
+import CreateBlog from "./pages/CreateBlog";
 function App() {
- 
   return (
     <>
       <Navbar/>
@@ -24,10 +24,14 @@ function App() {
           path={"/login"}
           element={<Login/>}
         />
+        <Route
+          path={"/createblog"}
+          element={<CreateBlog/>}
+        />
       </Routes>
     
     </>
   );
 }
 
-export default App
+export default App;
