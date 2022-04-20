@@ -22,9 +22,13 @@ function Login(){
           password: passwordRef.current.value,
         },{ withCredentials: true,
           headers:{'Content-Type': 'application/json'}});
-        window.location.href = '/'
-        dispatch({ type: "LOGIN_SUCCESS", payload: res.data }); //login สำเร็จ
-        console.log("ล็อกอินสำเร็จ")
+          
+         
+          console.log(res.data)
+          dispatch({ type: "LOGIN_SUCCESS", payload:res.data}); //login สำเร็จ
+          console.log("ล็อกอินสำเร็จ")
+          window.location.href = '/'
+        
       }catch(err) {
         setError(true);
         dispatch({ type: "LOGIN_FAILURE" }); //login ไม่สำเร็จ

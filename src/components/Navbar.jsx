@@ -1,20 +1,23 @@
 import React from "react";
 import { useContext } from "react";
 import { Context } from "../context/Context";
-import { Link } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 
 function Navbar({ fixed }) {
   const [navbarOpen, setNavbarOpen] = React.useState(false);
-  // const { user, dispatch } = useContext(Context);
-  // const handleLogout = () => {
-  //   dispatch({ type: "LOGOUT" });
-  //   // window.localStorage.removeItem("user")
-  // };
-  // let userData = window.localStorage.getItem("user")
-  //     userData = JSON.parse(userData)
-  // if (userData != null  ) { 
-  //       var token = userData.username
-  //   }    
+  const { user, dispatch } = useContext(Context);
+  const handleLogout = () => {
+    dispatch({ type: "LOGOUT" });
+    // window.localStorage.removeItem("user")
+  };
+  let userData = window.localStorage.getItem("user");
+  userData = JSON.parse(userData);
+
+  if (userData != null) {
+    var token = userData.username;
+    var id = userData.id;
+  }
+
   return (
     <>
       <nav className="relative flex flex-wrap items-center justify-between px-2 py-3 bg-pink-500 mb-3">
@@ -36,38 +39,81 @@ function Navbar({ fixed }) {
           </div>
           <div
             className={
-              "lg:flex flex-grow items-center" +
+              "lg:flex flex-row items-center" +
               (navbarOpen ? " flex" : " hidden")
             }
             id="example-navbar-danger"
           >
-            <ul className="flex flex-col lg:flex-row list-none lg:ml-auto">
-              <li className="nav-item">
-                <a
-                  className="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75"
-                  href="#pablo"
-                >
-                  <i className="fab fa-facebook-square text-lg leading-lg text-white opacity-75"></i><span className="ml-2">Share</span>
-                </a>
-              </li>
-              <li className="nav-item">
-                <a
-                  className="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75"
-                  href="/login"
-                >
-                  <i className="fab fa-twitter text-lg leading-lg text-white opacity-75"></i><span className="ml-2">Login</span>
-                </a>
-              </li>
-              <li className="nav-item">
-                <a
-                  className="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75"
-                  href="/register"
-                >
-                  <i className="fab fa-pinterest text-lg leading-lg text-white opacity-75"></i><span className="ml-2">Register</span>
-                </a>
-              </li>
-            </ul>
-          </div>
+             </div>
+            {/* <div> */}
+            {/* {user ? (
+          
+            <ul class="flex flex-row nobull" > 
+                 
+            <li>
+              <NavLink
+                className=" flex items-center text-xl uppercase font-bold leading-snug text-white hover:opacity-75"
+                to={`/profile/${userData.id}` }
+              >
+              <i  className="fab fa-pinterest text-lg leading-lg text-white opacity-75"></i><span className="ml-2">{token}</span>
+              
+              </NavLink>
+            </li>
+            
+          </ul>
+           ):(!user)} */}
+
+            {/* </div>   */}
+            
+              {user ? (
+                <div className="flex flex-row ">
+                  <ul class="flex flex-row nobull">
+                  <li>
+                      <NavLink
+                        className=" flex items-center text-xl uppercase font-bold leading-snug text-white hover:opacity-75"
+                        to={`/profile/${id}`}
+                      >
+                        <i className="fab fa-pinterest text-lg leading-lg text-white opacity-75"></i>
+                        <span className="ml-2">{token}</span>
+                      </NavLink>
+                    </li>
+                    <li onClick={handleLogout}>
+                      <NavLink
+                        className=" flex items-center text-xl uppercase font-bold leading-snug text-white hover:opacity-75"
+                        to="/"
+                      >
+                        <i className="fab fa-pinterest text-lg leading-lg text-white opacity-75"></i>
+                        <span className="ml-2"></span>
+                        {user && "LOGOUT"}
+                      </NavLink>
+                    </li>
+                  </ul>
+                </div>
+              ) : (
+                <ul className="flex flex-col lg:flex-row list-none lg:ml-auto">
+                  <li className="nav-item">
+                    <a
+                      className="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75"
+                      href="/login"
+                    >
+                      <i className="fab fa-twitter text-lg leading-lg text-white opacity-75"></i>
+                      <span className="ml-2">Login</span>
+                    </a>
+                  </li>
+                  <li className="nav-item">
+                    <a
+                      className="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75"
+                      href="/register"
+                    >
+                      <i className="fab fa-pinterest text-lg leading-lg text-white opacity-75"></i>
+                      <span className="ml-2">Register</span>
+                    </a>
+                  </li>
+                </ul>
+              )}
+            
+            
+          
         </div>
       </nav>
     </>

@@ -6,6 +6,8 @@ import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
+import Change from "./pages/Change";
+import Profile from "./pages/Profile";
 function App() {
  
   return (
@@ -23,6 +25,14 @@ function App() {
         <Route
           path={"/login"}
           element={<Login/>}
+        />
+        <Route
+          path={"/change"}
+          element={<Change/>}
+        />
+         <Route
+          path={"/profile/:id"}
+          element={<Profile/>}
         />
       </Routes>
     
