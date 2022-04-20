@@ -1,7 +1,20 @@
 import React from "react";
+import { useContext } from "react";
+import { Context } from "../context/Context";
+import { Link } from "react-router-dom";
 
 function Navbar({ fixed }) {
   const [navbarOpen, setNavbarOpen] = React.useState(false);
+  // const { user, dispatch } = useContext(Context);
+  // const handleLogout = () => {
+  //   dispatch({ type: "LOGOUT" });
+  //   // window.localStorage.removeItem("user")
+  // };
+  // let userData = window.localStorage.getItem("user")
+  //     userData = JSON.parse(userData)
+  // if (userData != null  ) { 
+  //       var token = userData.username
+  //   }    
   return (
     <>
       <nav className="relative flex flex-wrap items-center justify-between px-2 py-3 bg-pink-500 mb-3">
