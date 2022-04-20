@@ -7,20 +7,7 @@ import Home from "./pages/Home";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 function App() {
-  const markdown = `A paragraph with *emphasis* and **strong importance**.
-  > A block quote with ~strikethrough~ and a URL: https://reactjs.org.
-
-  * Lists
-  * [ ] todo
-  * [x] done
-  
-  A table:
-  
-  | a | b |
-  | - | - |
-  boat
-  boat
-  `;
+ 
   return (
     <>
       <Navbar/>
@@ -43,4 +30,4 @@ function App() {
   );
 }
 
-export default App;
+export default App
