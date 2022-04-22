@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useLayoutEffect } from "react";
-
 import { Route, Routes } from "react-router-dom";
 
 import Navbar from "./components/Navbar";
@@ -8,8 +7,8 @@ import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Change from "./pages/Change";
 import Profile from "./pages/Profile";
+import CreateBlog from "./pages/CreateBlog";
 function App() {
- 
   return (
     <>
       <Navbar/>
@@ -34,10 +33,14 @@ function App() {
           path={"/profile/:id"}
           element={<Profile/>}
         />
+        <Route
+          path={"/createblog"}
+          element={<CreateBlog/>}
+        />
       </Routes>
     
     </>
   );
 }
 
-export default App
+export default App;
