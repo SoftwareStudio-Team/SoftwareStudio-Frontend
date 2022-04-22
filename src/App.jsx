@@ -9,6 +9,8 @@ import Login from "./pages/Login";
 import Change from "./pages/Change";
 import Profile from "./pages/Profile";
 import BlogEditor from "./components/BlogEditor";
+// import Blog from "./components/BlogEditor/Preview";
+import Blog from "./components/Blog/Blog";
 function App() {
   return (
     <>
@@ -37,6 +39,10 @@ function App() {
         <Route
           path={"/createblog"}
           element={<BlogEditor />}
+        />
+        <Route
+          path={"/blog/:id"}
+          element={<Blog />}
         />
       </Routes>
     

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import Card from "../components/ฺBlog/BlogCard"
+import Card from "../components/Blog/BlogCard"
 function Home() {
   const [blog, setBlog] = useState({
     blog: [],
@@ -11,7 +11,6 @@ function Home() {
 
   const getBlog = () => {
     axios.get("https://161.246.6.18:8880/api/Contents").then((resp) => {
-      console.log(resp.data);
       setBlog({ ...blog, blog: resp.data });
     }); 
   };
