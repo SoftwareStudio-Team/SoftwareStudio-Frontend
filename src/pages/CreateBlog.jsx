@@ -19,18 +19,27 @@ function CreateBlog() {
     console.log("submit value", payload);
 
     axios
-      .post("https://161.246.6.18:8880/api/Contents", {
-        "title": payload.title,
-        "contentMarkdown": payload.content,
-        "createDate": payload.date,
-      })
+      .post(
+        "https://161.246.6.18:8880/api/Contents",
+        {
+          title: payload.title,
+          contentMarkdown: payload.content,
+          createDate: payload.date,
+        },
+        {
+          withCredentials: true,
+          headers: {
+            "Content-Type": "application/json",
+            "Accept": "text/plain",
+          },
+        }
+      )
       .then(function (response) {
         console.log(response);
-        window.location.href = "/"
+        window.location.href = "/";
       })
       .catch(function (error) {
         console.log(error);
-        
       });
   };
 
