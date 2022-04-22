@@ -27,7 +27,7 @@ function Login() {
           headers: { "Content-Type": "application/json" },
         }
       );
-      // window.location.href = "/";
+      window.location.href = "/";
       dispatch({ type: "LOGIN_SUCCESS", payload: res.data }); //login สำเร็จ
       console.log("ล็อกอินสำเร็จ");
     } catch (err) {

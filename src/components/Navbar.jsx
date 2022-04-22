@@ -2,14 +2,15 @@ import React from "react";
 import { useContext } from "react";
 import { Context } from "../context/Context";
 import { NavLink, Link } from "react-router-dom";
+import axios from "axios";
 
 function Navbar({ fixed }) {
   const [navbarOpen, setNavbarOpen] = React.useState(false);
   const { user, dispatch } = useContext(Context);
-  const handleLogout = () => {
-    dispatch({ type: "LOGOUT" });
-    // window.localStorage.removeItem("user")
-  };
+  // const handleLogout = () => {
+  //   dispatch({ type: "LOGOUT" });
+   
+  // };
   let userData = window.localStorage.getItem("user");
   userData = JSON.parse(userData);
 
@@ -17,6 +18,27 @@ function Navbar({ fixed }) {
     var token = userData.username;
     var id = userData.id;
   }
+  const handleLogout = async (e) => {
+    e.preventDefault();
+    
+    try {
+      const res = await axios.get(
+        "https://161.246.6.18:8880/api/Auth/logout",
+       
+        {
+          withCredentials: true,
+          headers: { "Content-Type": "application/json" },
+        }
+      );
+      // window.location.href = "/";
+      window.localStorage.removeItem("user")
+      dispatch({ type: "LOGOUT" });
+      console.log("ล็อกเอ้าส์สำเร็จ");
+    } catch (err) {
+      setError(true);
+      
+    }
+  };
 
   return (
     <>
@@ -81,16 +103,16 @@ function Navbar({ fixed }) {
                     to={`/profile/${id}`}
                   >
                     <i className="fab fa-pinterest text-lg leading-lg text-white opacity-75"></i>
-                    <span className="ml-2">{token}</span>
+                    <span className="ml-2 py-2 px-4" >{token}</span>
                   </NavLink>
                 </li>
                 <li onClick={handleLogout}>
                   <NavLink
-                    className=" flex items-center text-xl uppercase font-bold leading-snug text-white hover:opacity-75"
+                    className=" flex items-center text-xl uppercase font-bold leading-snug text-white hover:opacity-75 py-2"
                     to="/"
                   >
                     <i className="fab fa-pinterest text-lg leading-lg text-white opacity-75"></i>
-                    <span className="ml-2"></span>
+                    <span className="ml-2  "></span>
                     {user && "LOGOUT"}
                   </NavLink>
                 </li>
