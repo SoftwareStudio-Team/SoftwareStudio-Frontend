@@ -91,7 +91,7 @@ function Navbar({ fixed }) {
               <ul class="flex flex-row nobull">
                 <li>
                   <Link to="/createblog">
-                    <button className=" flex items-center text-xl uppercase font-bold leading-snug bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-2  hover:opacity-75">
+                    <button className=" flex items-center text-xl uppercase font-bold leading-snug bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded ml-2  hover:opacity-75">
                       Createblog
                       <i className="fab fa-pinterest text-lg leading-lg text-white opacity-75"></i>
                     </button>

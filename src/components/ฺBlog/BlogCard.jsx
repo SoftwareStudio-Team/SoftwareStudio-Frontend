@@ -1,7 +1,7 @@
 import React from "react";
 
 function BlogCard(blog) {
-
+  
   return (
     <div className="flex flex-col w-4/5 border-2 rounded-md h-[100px] my-4">
         <div className="text-xl pt-2 pl-4">{blog.blog.title}</div>

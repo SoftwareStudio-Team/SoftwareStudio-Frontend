@@ -8,7 +8,7 @@ import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Change from "./pages/Change";
 import Profile from "./pages/Profile";
-import CreateBlog from "./pages/CreateBlog";
+import BlogEditor from "./components/BlogEditor";
 function App() {
   return (
     <>
@@ -36,7 +36,7 @@ function App() {
         />
         <Route
           path={"/createblog"}
-          element={<CreateBlog/>}
+          element={<BlogEditor />}
         />
       </Routes>
     
