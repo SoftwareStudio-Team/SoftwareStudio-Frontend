@@ -104,6 +104,7 @@ function CreateBlog() {
           <div className="">
             <ReactMarkdown
               children={content}
+              className="markdown"
               remarkPlugins={[remarkGfm]}
               rehypePlugins={[rehypeRaw]}
             />

@@ -23,7 +23,7 @@ function Home() {
           <div>Loading</div>
         ) : (
           blog.blog.map((blog) => {
-            return <Card/>;
+            return <Card blog={blog}/>;
           })
         )}
       </div>

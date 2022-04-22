@@ -43,10 +43,9 @@ function Navbar({ fixed }) {
               (navbarOpen ? " flex" : " hidden")
             }
             id="example-navbar-danger"
-          >
-             </div>
-            {/* <div> */}
-            {/* {user ? (
+          ></div>
+          {/* <div> */}
+          {/* {user ? (
           
             <ul class="flex flex-row nobull" > 
                  
@@ -63,57 +62,70 @@ function Navbar({ fixed }) {
           </ul>
            ):(!user)} */}
 
-            {/* </div>   */}
-            
-              {user ? (
-                <div className="flex flex-row ">
-                  <ul class="flex flex-row nobull">
-                  <li>
-                      <NavLink
-                        className=" flex items-center text-xl uppercase font-bold leading-snug text-white hover:opacity-75"
-                        to={`/profile/${id}`}
-                      >
-                        <i className="fab fa-pinterest text-lg leading-lg text-white opacity-75"></i>
-                        <span className="ml-2">{token}</span>
-                      </NavLink>
-                    </li>
-                    <li onClick={handleLogout}>
-                      <NavLink
-                        className=" flex items-center text-xl uppercase font-bold leading-snug text-white hover:opacity-75"
-                        to="/"
-                      >
-                        <i className="fab fa-pinterest text-lg leading-lg text-white opacity-75"></i>
-                        <span className="ml-2"></span>
-                        {user && "LOGOUT"}
-                      </NavLink>
-                    </li>
-                  </ul>
-                </div>
-              ) : (
-                <ul className="flex flex-col lg:flex-row list-none lg:ml-auto">
-                  <li className="nav-item">
-                    <a
-                      className="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75"
-                      href="/login"
-                    >
-                      <i className="fab fa-twitter text-lg leading-lg text-white opacity-75"></i>
-                      <span className="ml-2">Login</span>
-                    </a>
-                  </li>
-                  <li className="nav-item">
-                    <a
-                      className="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75"
-                      href="/register"
-                    >
+          {/* </div>   */}
+
+          {user ? (
+            <div className="flex flex-row ">
+              <ul class="flex flex-row nobull">
+                <li>
+                  <Link to="/createblog">
+                    <button className=" flex items-center text-xl uppercase font-bold leading-snug bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-2  hover:opacity-75">
+                      Createblog
                       <i className="fab fa-pinterest text-lg leading-lg text-white opacity-75"></i>
-                      <span className="ml-2">Register</span>
-                    </a>
-                  </li>
-                </ul>
-              )}
-            
-            
-          
+                    </button>
+                  </Link>
+                </li>
+                <li>
+                  <NavLink
+                    className=" flex items-center text-xl uppercase font-bold leading-snug text-white hover:opacity-75"
+                    to={`/profile/${id}`}
+                  >
+                    <i className="fab fa-pinterest text-lg leading-lg text-white opacity-75"></i>
+                    <span className="ml-2">{token}</span>
+                  </NavLink>
+                </li>
+                <li onClick={handleLogout}>
+                  <NavLink
+                    className=" flex items-center text-xl uppercase font-bold leading-snug text-white hover:opacity-75"
+                    to="/"
+                  >
+                    <i className="fab fa-pinterest text-lg leading-lg text-white opacity-75"></i>
+                    <span className="ml-2"></span>
+                    {user && "LOGOUT"}
+                  </NavLink>
+                </li>
+              </ul>
+            </div>
+          ) : (
+            <ul className="flex flex-col lg:flex-row list-none lg:ml-auto">
+              <li className="nav-item">
+                <Link to="/login">
+                  <button className=" flex items-center text-xl uppercase font-bold leading-snug bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-2  hover:opacity-75">
+                    Createblog
+                    <i className="fab fa-pinterest text-lg leading-lg text-white opacity-75"></i>
+                  </button>
+                </Link>
+              </li>
+              <li className="nav-item">
+                <a
+                  className="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75"
+                  href="/login"
+                >
+                  <i className="fab fa-twitter text-lg leading-lg text-white opacity-75"></i>
+                  <span className="ml-2">Login</span>
+                </a>
+              </li>
+              <li className="nav-item">
+                <a
+                  className="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75"
+                  href="/register"
+                >
+                  <i className="fab fa-pinterest text-lg leading-lg text-white opacity-75"></i>
+                  <span className="ml-2">Register</span>
+                </a>
+              </li>
+            </ul>
+          )}
         </div>
       </nav>
     </>
