@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect,useCallback,useMemo } from 'react';
 import { useParams } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
@@ -7,12 +7,17 @@ import rehypeRaw from 'rehype-raw';
 import { PageLayout, FeedbackCard } from '../components';
 
 import ContentsApi from '../api/contents';
+import CommentCard from '../comment/CommentCard';
+import Postcom from "../comment/Postcom"
+
 
 const BlogPage = () => {
   const id = useParams().id;
 
   const [blog, setBlog] = useState();
   const [loading, setLoading] = useState(false);
+  
+  
 
   useEffect(() => {
     const getBlog = async () => {
@@ -20,13 +25,20 @@ const BlogPage = () => {
         setLoading(true);
         const { data } = await ContentsApi.getById({ id });
         setBlog(data);
+        // console.log(blog)
+        // setComment(data.comments);
+        // console.log(comment);
       } catch (err) {
         toast.error(err.response.data.message);
       }
       setLoading(false);
     };
+    
     getBlog();
+    
   }, []);
+  
+  
 
   return (
     <PageLayout>
@@ -54,8 +66,33 @@ const BlogPage = () => {
             </>
           )}
         </div>
+                <Postcom idpost={id}></Postcom>
+        <div>
+          {loading ? (
+            <p>loading...</p>
+          ) : (
+            <>
+              {blog ? (
+                <>
+                  <div className="w-full h-full bg-black text-white">
+                 
+                    {blog.comments.map((data, index) => {
+                      <CommentCard comment={data} key={index}  />;
+                       
+                    })}
+                  
+                  </div>
+                </>
+              ) : (
+                <div className="text-slate-400 font-bold">
+                  Nothing to preview
+                </div>
+              )}
+            </>
+          )}
+        </div>
       </div>
-      <FeedbackCard/>
+      
     </PageLayout>
   );
 };
