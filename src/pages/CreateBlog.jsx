@@ -1,107 +1,100 @@
-import React, { useState } from "react";
-import ReactMarkdown from "react-markdown";
-import remarkGfm from "remark-gfm";
-import rehypeRaw from "rehype-raw";
-import axios from "axios";
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
-function CreateBlog() {
-  const [content, setContent] = useState(``);
-  const [title, setTitle] = useState(``);
-  const handleSubmit = async (e) => {
+import ContentsApi from '../api/contents';
+
+import { PageLayout, BlogPreview } from '../components';
+
+const CreateBlogPage = () => {
+  const navigate = useNavigate();
+
+  const [title, setTitle] = useState('');
+  const [contentMarkdown, setContentMarkdown] = useState('');
+
+  const [showPreview, setShowPreview] = useState(false);
+
+  const togglePreview = () => {
+    setShowPreview(!showPreview);
+  };
+
+  const handleCreateBlog = async (e) => {
     e.preventDefault();
-    const date = new Date();
-    const payload = {
-      content,
-      title,
-      date,
-    };
-
-    console.log("submit value", payload);
-
-    axios
-      .post("https://161.246.6.18:8880/api/Contents", {
-        "title": payload.title,
-        "contentMarkdown": payload.content,
-        "createDate": payload.date,
-      })
-      .then(function (response) {
-        console.log(response);
-        window.location.href = "/"
-      })
-      .catch(function (error) {
-        console.log(error);
-        
+    //TODO : may apply with redux like LoginPage
+    try {
+      await ContentsApi.create({
+        title,
+        contentMarkdown,
+        createDate: new Date().now,
       });
+      navigate('/');
+    } catch (err) {
+      toast.error(err.response.data.message);
+    }
   };
 
   return (
-    <div>
-      <div className="flex">
-        {/* Writing Area */}
-        <div className="flex-1 bg-teal-400 px-4">
-          {/* Header */}
-          <div className="text-center">Write Your Blog Here!</div>
-
-          {/* Form */}
-          <div className="flex flex-col">
-            <form onSubmit={handleSubmit}>
-              {/* Title  Area */}
-              <div className="flex py-3">
-                <div className="float-left w-1/5">
-                  <label>Title</label>
+    <PageLayout>
+      <div className="w-full h-full">
+        <div className="grid grid-cols-7 md:grid-cols-5 h-96">
+          <div className="flex flex-col gap-3 col-start-2 md:col-start-2 col-span-5 md:col-span-3 h-full">
+            <button
+              className={
+                !showPreview
+                  ? 'bg-white text-amber-600 border-amber-400 border-4 hover:border-amber-500 font-bold text-sm rounded-full w-24 h-9 ease-in-out duration-300'
+                  : 'bg-amber-400 hover:bg-amber-500 text-white font-bold text-sm rounded-full w-24 h-9 ease-in-out duration-300'
+              }
+              onClick={togglePreview}
+            >
+              Preview
+            </button>
+            <hr />
+            <div className="h-full">
+              {!showPreview ? (
+                <div className="flex flex-col gap-5 h-full">
+                  <div className="flex flex-col gap-2">
+                    <p className="text-stone-500">Title</p>
+                    <input
+                      className="shadow rounded-md appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                      id="username"
+                      type="text"
+                      placeholder="Enter your title."
+                      value={title}
+                      onChange={(e) => {
+                        setTitle(e.target.value);
+                      }}
+                    />
+                  </div>
+                  <div className="flex flex-col gap-2 h-1/2">
+                    <p className="text-stone-500">Content</p>
+                    <textarea
+                      className="h-full p-2 border-2 shadow rounded-md outline-none resize-none form-textarea"
+                      placeholder="Enter your content."
+                      value={contentMarkdown}
+                      onChange={(e) => {
+                        setContentMarkdown(e.target.value);
+                      }}
+                    />
+                  </div>
                 </div>
-                <div className="float-left w-4/5">
-                  <input
-                    type="text"
-                    id="title"
-                    name="title"
-                    className="w-full border-2 rounded-md h-[40px]"
-                    placeholder="Your Topic.."
-                    onChange={(event) => setTitle(event.target.value)}
-                  />
-                </div>
-              </div>
-              {/* Content Area */}
-              <div className="flex py-3">
-                <div className="float-left w-1/5">
-                  <label>Content</label>
-                </div>
-                <div className="float-left w-4/5 ">
-                  <textarea
-                    id="content"
-                    name="content"
-                    className="w-full border-2 resize-none rounded-md h-[725px] "
-                    placeholder="Write something.."
-                    onChange={(event) => setContent(event.target.value)}
-                    defaultValue={content}
-                  />
-                </div>
-              </div>
-              {/* Submit Button */}
-              <div className="py-3 float-right">
-                <input
-                  type="submit"
-                  className="border-2 rounded-md bg-white px-4"
-                  value="Post!"
-                />
-              </div>
-            </form>
+              ) : (
+                <BlogPreview title={title} contentMarkdown={contentMarkdown} />
+              )}
+            </div>
           </div>
         </div>
-
-        {/* Preview Area */}
-        <div className="flex-1">
-          <div className="text-center">This is Preview</div>
-          <div className="">
-            <ReactMarkdown
-              children={content}
-              remarkPlugins={[remarkGfm]}
-              rehypePlugins={[rehypeRaw]}
-            />
-          </div>
+        <div className="flex flex-row justify-center w-full">
+          <button
+            className={
+              'bg-teal-500 hover:bg-teal-600 text-white font-bold py-2 px-4 rounded-full w-full md:w-32 h-12 ease-in-out duration-300'
+            }
+            onClick={handleCreateBlog}
+          >
+            Create
+          </button>
         </div>
       </div>
-    </div>
+    </PageLayout>
   );
-}
-export default CreateBlog;
+};
+export default CreateBlogPage;

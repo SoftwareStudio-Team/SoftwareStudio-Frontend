@@ -1,0 +1,35 @@
+.markdown ul {
+  @apply list-disc list-inside;
+}
+
+.markdown a {
+  @apply text-blue-500;
+}
+
+.markdown h1 {
+  @apply font-bold text-2xl;
+}
+
+.markdown h2 {
+  @apply font-bold text-xl;
+}
+
+.markdown h3 {
+  @apply font-bold text-lg;
+}
+
+.markdown h4 {
+  @apply font-bold text-base;
+}
+
+.markdown h5 {
+  @apply font-bold text-sm;
+}
+
+.markdown h6 {
+  @apply font-bold text-xs;
+}
+
+.markdown pre {
+  @apply bg-gray-700;
+}
