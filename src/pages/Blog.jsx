@@ -74,12 +74,13 @@ const BlogPage = () => {
             <>
               {blog ? (
                 <>
-                  <div className="w-full h-full bg-black text-white">
+                  <div className="w-full h-full ">
                  
                     {blog.comments.map((data, index) => {
-                      <CommentCard comment={data} key={index}  />;
+                      return <CommentCard comment={data}  key={index}  />;
                        
                     })}
+                    
                   
                   </div>
                 </>
