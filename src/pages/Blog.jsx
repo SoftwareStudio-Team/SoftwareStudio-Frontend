@@ -25,7 +25,7 @@ const BlogPage = () => {
         setLoading(true);
         const { data } = await ContentsApi.getById({ id });
         setBlog(data);
-        // console.log(blog)
+        
         // setComment(data.comments);
         // console.log(comment);
       } catch (err) {
@@ -77,7 +77,9 @@ const BlogPage = () => {
                   <div className="w-full h-full ">
                  
                     {blog.comments.map((data, index) => {
-                      return <CommentCard comment={data}  key={index}  />;
+                      
+                      return <CommentCard comment={data}  index={index}  />;
+                     
                        
                     })}
                     

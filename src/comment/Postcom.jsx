@@ -1,10 +1,12 @@
 import React from "react";
-
+import { useUser } from "../state/user/hook";
 import {useState} from "react";
 import axios from "axios";
 function Postcom(props){
     const { idpost } = props;
-
+    const {user} =useUser();
+    console.log(user.id)
+    
     const [commentMessage, setCommentMessage] = useState("");
     const contentId="";
     const ownerId="";
@@ -12,14 +14,9 @@ function Postcom(props){
 
     const [error, setError] = useState(false);
 
-    let userData = window.localStorage.getItem("user");
-    userData = JSON.parse(userData);
-
-    if (userData != null) {
-        var iduser = userData.id;
-        
-    }
-     console.log(iduser,idpost)
+    
+    
+    
     
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -36,7 +33,7 @@ function Postcom(props){
           
             commentMessage:commentMessage,
             contentId:idpost,
-            ownerId:iduser,
+            ownerId:user.id,
             
             
           },{ withCredentials: true,
@@ -44,7 +41,7 @@ function Postcom(props){
           console.log("commentสำเร็จ")
           
           res.data && window.location.reload();
-          console.log(res.data)
+          
         } catch (err) {
           setError(true);
         }
