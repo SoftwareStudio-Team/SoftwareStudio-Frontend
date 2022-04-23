@@ -14,8 +14,6 @@ const RegisterPage = () => {
   const [birthDate, setBirthDate] = useState('');
 
   const handleRegister = async (e) => {
-    console.log('asd');
-    //TODO : may apply with redux like LoginPage
     e.preventDefault();
     try {
       await AccountsApi.create({

@@ -5,7 +5,10 @@ import { useUser } from '../state/user/hook';
 
 const LoginPage = () => {
   const navigate = useNavigate();
-  const { user, login } = useUser();
+  const {
+    user,
+    reducers: { login },
+  } = useUser();
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -17,7 +20,7 @@ const LoginPage = () => {
 
   useEffect(() => {
     if (user) {
-      navigate('/profile');
+      navigate('/');
     }
   }, [user]);
 

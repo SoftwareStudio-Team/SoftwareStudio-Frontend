@@ -6,8 +6,9 @@ import { useUser } from './state/user/hook';
 import LoginPage from './pages/Login';
 import RegisterPage from './pages/Register';
 import HomePage from './pages/Home';
-import ProfilePage from './pages/Profile';
+import BlogPage from './pages/Blog';
 import CreateBlogPage from './pages/CreateBlog';
+import ProfilePage from './pages/Profile';
 
 const App = () => {
   const { user } = useUser();
@@ -17,11 +18,12 @@ const App = () => {
       {user ? (
         <Routes>
           <Route path={'/'} element={<HomePage />} />
-          <Route path={'/profile'} element={<ProfilePage />} />
+          <Route path={'/blog/:id'} element={<BlogPage />} />
           {user.role === 'admin' && (
             <Route path={'/createBlog'} element={<CreateBlogPage />} />
           )}
-          <Route path="*" element={<Navigate to="/profile" replace />} />
+          <Route path={'/profile'} element={<ProfilePage />} />
+          <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       ) : (
         <Routes>

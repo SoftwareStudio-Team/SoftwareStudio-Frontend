@@ -20,7 +20,7 @@ export const fetchLogout = createAsyncThunk('user/fetchLogout', async () => {
 });
 
 export const userSlice = createSlice({
-  name: 'auth',
+  name: 'user',
   initialState,
   reducers: {},
   extraReducers: (builder) => {

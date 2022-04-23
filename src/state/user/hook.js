@@ -17,7 +17,9 @@ export const useUser = () => {
 
   return {
     user,
-    login,
-    logout,
+    reducers: {
+      login,
+      logout,
+    },
   };
 };

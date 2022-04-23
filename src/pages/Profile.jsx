@@ -9,7 +9,7 @@ const ProfilePage = () => {
 
   return (
     <PageLayout>
-      <div className="flex flex-col">
+      <div className="flex flex-col w-full h-full">
         <div>{user.id}</div>
         <div>{user.firstName}</div>
         <div>{user.lastName}</div>

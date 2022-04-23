@@ -5,10 +5,8 @@ import Navbar from './Navbar';
 const PageLayout = ({ children }) => {
   return (
     <div className="flex flex-col justify-center items-center w-screen h-screen">
-      <div className="w-full h-20">
-        <Navbar />
-      </div>
-      <div className="w-full h-full">{children}</div>
+      <Navbar />
+      <div className="w-full h-full pt-24 px-10">{children}</div>
     </div>
   );
 };

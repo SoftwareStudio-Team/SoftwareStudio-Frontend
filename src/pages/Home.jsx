@@ -1,34 +1,32 @@
 import React, { useEffect, useState } from 'react';
 
-import Card from '../components/Blog/BlogCard';
+import { PageLayout, BlogCard } from '../components';
+
+import ContentsApi from '../api/contents';
 
 const Home = () => {
-  const [blog, setBlog] = useState({
-    blog: [],
-  });
+  const [blogs, setBlogs] = useState([]);
 
   useEffect(() => {
-    getBlog();
+    const getBlogs = async () => {
+      try {
+        const { data } = await ContentsApi.getAll();
+        setBlogs(data);
+      } catch (err) {
+        toast.error(err.response.data.messsage);
+      }
+    };
+    getBlogs();
   }, []);
 
-  const getBlog = () => {
-    axios.get('https://161.246.6.18:8880/api/Contents').then((resp) => {
-      setBlog({ ...blog, blog: resp.data });
-    });
-  };
-
   return (
-    <div>
+    <PageLayout>
       <div className="grid grid-cols-2 justify-items-center">
-        {blog.blog.length === 0 ? (
-          <div>Loading</div>
-        ) : (
-          blog.blog.map((blog) => {
-            return <Card blog={blog} />;
-          })
-        )}
+        {blogs.map((blog) => {
+          return <BlogCard blog={blog} />;
+        })}
       </div>
-    </div>
+    </PageLayout>
   );
 };
 export default Home;
