@@ -4,7 +4,7 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import rehypeRaw from 'rehype-raw';
 
-import { PageLayout } from '../components';
+import { PageLayout, FeedbackCard } from '../components';
 
 import ContentsApi from '../api/contents';
 
@@ -55,6 +55,7 @@ const BlogPage = () => {
           )}
         </div>
       </div>
+      <FeedbackCard/>
     </PageLayout>
   );
 };

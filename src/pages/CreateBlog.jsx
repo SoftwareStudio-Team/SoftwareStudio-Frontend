@@ -25,7 +25,6 @@ const CreateBlogPage = () => {
       await ContentsApi.create({
         title,
         contentMarkdown,
-        createDate: new Date().now,
       });
       navigate('/');
     } catch (err) {

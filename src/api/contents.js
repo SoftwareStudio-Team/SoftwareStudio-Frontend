@@ -11,11 +11,11 @@ const ContentsApi = {
       method: 'get',
       url: `/Contents/${id}`,
     }),
-  create: ({ title, contentMarkdown, createDate }) =>
+  create: ({ title, contentMarkdown }) =>
     api({
       method: 'post',
       url: '/Contents',
-      data: { title, contentMarkdown, createDate },
+      data: { title, contentMarkdown },
     }),
   update: ({ id, title, contentMarkdown }) =>
     api({
