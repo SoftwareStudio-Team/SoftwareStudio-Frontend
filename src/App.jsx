@@ -5,6 +5,7 @@ import { useUser } from './state/user/hook';
 
 import LoginPage from './pages/Login';
 import RegisterPage from './pages/Register';
+import HomePage from './pages/Home';
 import ProfilePage from './pages/Profile';
 import CreateBlogPage from './pages/CreateBlog';
 
@@ -15,6 +16,7 @@ const App = () => {
     <BrowserRouter>
       {user ? (
         <Routes>
+          <Route path={'/'} element={<HomePage />} />
           <Route path={'/profile'} element={<ProfilePage />} />
           {user.role === 'admin' && (
             <Route path={'/createBlog'} element={<CreateBlogPage />} />

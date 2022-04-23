@@ -1,4 +1,5 @@
 import 'react-toastify/dist/ReactToastify.css';
+import './styles/markdown.css';
 import './styles/index.css';
 
 import React from 'react';
