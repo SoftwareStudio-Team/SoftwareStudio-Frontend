@@ -29,6 +29,7 @@ const BlogCard = ({ blog }) => {
         <div className="flex items-center text-red-600 font-bold">
           <MdOutlineFavorite />
           <p>{blog.likes.length}</p>
+
         </div>
         <div className="flex items-center space-x-0.5 text-slate-600 font-bold">
           <MdTextsms />
