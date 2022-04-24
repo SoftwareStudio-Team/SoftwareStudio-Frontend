@@ -32,11 +32,13 @@ const Navbar = () => {
         </div>
       </Link>
       <div className="flex flex-row items-center space-x-2 divide-x-2">
-        <Link className="px-4 py-2 rounded-lg bg-invisible" to="/dashboard">
-          <p className="font-bold text-slate-400 hover:text-teal-500 ease-in-out duration-300">
-            Manage Account
-          </p>
-        </Link>
+        {user.role == 'admin' && (
+          <Link className="px-4 py-2 rounded-lg bg-invisible" to="/dashboard">
+            <p className="font-bold text-slate-400 hover:text-teal-500 ease-in-out duration-300">
+              Manage Account
+            </p>
+          </Link>
+        )}
         <div className="flex flex-row">
           <Link className="px-4 py-2 rounded-lg bg-invisible" to="/profile">
             <p className="font-bold text-slate-400 hover:text-teal-500 ease-in-out duration-300">
