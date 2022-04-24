@@ -3,7 +3,7 @@ import '../pages/Blog';
 import { useEffect, useState } from 'react';
 import CommentsApi from '../api/comments';
 import AccountsApi from '../api/accounts';
-import { NavLink, useParams } from 'react-router-dom';
+
 import { useUser } from '../state/user/hook';
 import { toast } from 'react-toastify';
 
@@ -11,15 +11,27 @@ const CommentCard = ({ comment, index }) => {
   const { user } = useUser();
   const [commentId, setCommentId] = useState('');
   const [commentuserid, setCommentuserId] = useState('');
-  const [usercomId, setUsercomId] = useState('');
   const [likecomment, setlikecomment] = useState(0);
   const [islike, setIslike] = useState(false);
-  const [togbutton,setTogbutton]=useState(false);
+  const [isHidden, setisHidden] = useState();
+  const [isShow, setisShow] = useState();
+
   useEffect(() => {
     setCommentId(comment.id.toString());
     setCommentuserId(comment.owner.id.toString());
+    setisHidden(comment.isHid);
     pushcomment();
+    setShowComment();
   }, []);
+
+  const setShowComment = () => {
+    if (comment.isHid == true && user.role === 'member') {
+      setisShow(false);
+    } else {
+      setisShow(true);
+    }
+  };
+
   const pushcomment = async () => {
     try {
       const { data } = await CommentsApi.getById({ id: commentId });
@@ -62,7 +74,7 @@ const CommentCard = ({ comment, index }) => {
       toast.error('ไม่สามารถลบได้');
     }
   };
-  
+
   const blockUser = async () => {
     if (user.role === 'admin') {
       try {
@@ -73,83 +85,93 @@ const CommentCard = ({ comment, index }) => {
       toast.error('ไม่สามารถลบได้');
     }
   };
-//   const editpost = async () => {
-//     if (commentuserid === user.id ) {
-//       try {
-//         await CommentsApi.update({ id: commentId,commentMessage: });
-//         window.location.reload();
-//       } catch (err) {
-        
-//       }
-//     }else{
-//         toast.error("ไม่สามารถแก้ไขได้")
-//     }
-//   };
+
+  const hideComment = async () => {
+    if (user.role === 'admin') {
+      try {
+        await CommentsApi.hide({ id: commentId });
+        window.location.reload();
+      } catch (err) {}
+    } else {
+      toast.error('ไม่สามารถลบได้');
+    }
+  };
+
+  const unHideComment = async () => {
+    if (user.role === 'admin') {
+      try {
+        await CommentsApi.unhide({ id: commentId });
+        window.location.reload();
+      } catch (err) {}
+    } else {
+      toast.error('ไม่สามารถลบได้');
+    }
+  };
+
+  const cssClass =
+    'text-white px-4 w-auto h-10 bg-red-600 rounded-full hover:bg-red-700 active:shadow-lg mouse shadow transition ease-in duration-200 focus:outline-none';
 
   return (
-    <div className="flex flex-col w-full h-full bg-white max-w-full rounded-2xl px-10 py-8 mt-5 shadow-lg hover:shadow-2xl transition duration-500">
-      <div className="flex flex-row justify-between">
-        <p className="mt-4 text-md text-gray-600">{comment.commentMessage}</p>
-        {/* Delete Btn */}
+    <div className={isShow ? `visible` : `hidden`}>
+      <div className="flex flex-col w-full h-full bg-white max-w-full rounded-2xl px-10 py-8 mt-5 shadow-lg hover:shadow-2xl transition duration-500">
+        <div className="flex flex-row justify-between">
+          <p className="mt-4 text-md text-gray-600">{comment.commentMessage}</p>
+          {/* Delete Btn */}
 
-        <div className="items-end">
-         {/* {togbutton ? (<button
-            className="text-white px-4 w-auto h-10 bg-yellow-400 rounded-full hover:bg-yellow-600 active:shadow-lg mouse shadow transition ease-in duration-200 focus:outline-none mr-2"
-            onClick={setTogbutton(true)}
-          >
-            edit
-          </button>):(<div>
-          <input type="text"></input>
-          <button
-            className="text-white px-4 w-auto h-10 bg-yellow-400 rounded-full hover:bg-yellow-600 active:shadow-lg mouse shadow transition ease-in duration-200 focus:outline-none mr-2"
-            onClick={setTogbutton(false)}
-          >
-            hide
-          </button> 
-          </div>  
-        )} */}
-          <button
-            className="text-white px-4 w-auto h-10 bg-red-600 rounded-full hover:bg-red-700 active:shadow-lg mouse shadow transition ease-in duration-200 focus:outline-none"
-            onClick={deletepost}
-          >
-            delete
-          </button>
-          <button
-            className="text-white px-4 w-auto h-10 bg-red-600 rounded-full hover:bg-red-700 active:shadow-lg mouse shadow transition ease-in duration-200 focus:outline-none"
-            onClick={blockUser}
-          >
-            block
-          </button>
-        </div>
-      </div>
-      <div className="flex justify-between items-center">
-        <div className="mt-4 flex items-center space-x-4 py-6">
-          <div className="text-sm font-semibold">
-            {comment.owner.username}{' '}
-            <span className="font-normal">
-              {' '}
-              {comment.createDate.substring(0, 10)}
-            </span>
+          <div className="items-end">
+            <button
+              className={
+                commentuserid === user.id || user.role === 'admin'
+                  ? `${cssClass}`
+                  : `hidden`
+              }
+              onClick={deletepost}
+            >
+              delete
+            </button>
+            <button
+              className={user.role === 'admin' ? `${cssClass}` : `hidden`}
+              onClick={blockUser}
+            >
+              block
+            </button>
+            <button
+              className={user.role === 'admin' ? `${cssClass}` : `hidden`}
+              onClick={isHidden ? unHideComment : hideComment}
+            >
+              {isHidden ? `UnHide` : `Hide`}
+            </button>
           </div>
         </div>
-        <div className="">
-          <button
-            className="text-white px-4 w-auto h-10 bg-red-600 rounded-full hover:bg-red-700 active:shadow-lg mouse shadow transition ease-in duration-200 focus:outline-none"
-            onClick={islike ? handleunlike : handlelike}
-          >
-            {likecomment}
-            <svg
-              viewBox="0 0 20 20"
-              enableBackground="new 0 0 20 20"
-              className="w-6 h-6 inline-block mr-1"
+        <div className="flex justify-between items-center">
+          <div className="mt-4 flex items-center space-x-4 py-6">
+            <div className="text-sm font-semibold">
+              {comment.owner.username}{' '}
+              <span className="font-normal">
+                {' '}
+                {comment.createDate.substring(0, 10)}
+              </span>
+            </div>
+          </div>
+          <div className="">
+            <button
+              className="text-white px-4 w-auto h-10 bg-red-600 rounded-full hover:bg-red-700 active:shadow-lg mouse shadow transition ease-in duration-200 focus:outline-none"
+              onClick={islike ? handleunlike : handlelike}
             >
-              <path
-                fill="#FFFFFF"
-                d="M17.19,4.155c-1.672-1.534-4.383-1.534-6.055,0L10,5.197L8.864,4.155c-1.672-1.534-4.382-1.534-6.054,0
+              {likecomment}
+              <svg
+                viewBox="0 0 20 20"
+                enableBackground="new 0 0 20 20"
+                className="w-6 h-6 inline-block mr-1"
+              >
+                <path
+                  fill="#FFFFFF"
+                  d="M17.19,4.155c-1.672-1.534-4.383-1.534-6.055,0L10,5.197L8.864,4.155c-1.672-1.534-4.382-1.534-6.054,0
                                     c-1.881,1.727-1.881,4.52,0,6.246L10,17l7.19-6.599C19.07,8.675,19.07,5.881,17.19,4.155z"
-              />
-            </svg>
-          </button>
+                />
+              </svg>
+            </button>
+          </div>
         </div>
       </div>
     </div>
