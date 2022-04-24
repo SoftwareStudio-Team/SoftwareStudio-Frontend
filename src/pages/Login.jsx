@@ -38,7 +38,7 @@ const LoginPage = () => {
           <p className="mt-2 text-center text-sm text-gray-600">
             Or
             <a
-              className="font-medium text-indigo-600 hover:text-indigo-500"
+              className="font-medium text-teal-500 hover:text-teal-600 ease-in-out duration-300"
               href="/register"
             >
               {' '}
@@ -86,12 +86,14 @@ const LoginPage = () => {
               />
             </div>
           </div>
-          <button
-            type="submit"
-            className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-          >
-            Sign in
-          </button>
+          <div className="flex flex-row justify-center">
+            <button
+              type="submit"
+              className="bg-teal-500 hover:bg-teal-600 text-white font-bold px-4 rounded-full w-full md:w-36 h-9 ease-in-out duration-300"
+            >
+              Sign In
+            </button>
+          </div>
         </form>
       </div>
     </div>
