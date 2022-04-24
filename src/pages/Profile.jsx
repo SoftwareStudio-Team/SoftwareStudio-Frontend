@@ -74,7 +74,7 @@ const ProfilePage = () => {
                                 </p>
                             </div>
                             <div class="">
-                                <p class="font-light text-xs text-xs">
+                                <p class="font-light text-xs">
                                     role
                                 </p>
                                 <p class="font-medium tracking-wider text-sm">

@@ -9,6 +9,7 @@ import HomePage from './pages/Home';
 import BlogPage from './pages/Blog';
 import CreateBlogPage from './pages/CreateBlog';
 import ProfilePage from './pages/Profile';
+import DashboardPage from './pages/Dashboard';
 
 const App = () => {
   const { user } = useUser();
@@ -21,6 +22,9 @@ const App = () => {
           <Route path={'/blog/:id'} element={<BlogPage />} />
           {user.role === 'admin' && (
             <Route path={'/createBlog'} element={<CreateBlogPage />} />
+          )}
+          {user.role === 'admin' && (
+            <Route path={'/dashboard'} element={<DashboardPage />} />
           )}
           <Route path={'/profile'} element={<ProfilePage />} />
           <Route path="*" element={<Navigate to="/" replace />} />
