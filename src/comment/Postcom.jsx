@@ -58,7 +58,7 @@ function Postcom(props) {
               required
             />
           </div>
-          <div className="w-full flex justify-start md:w-full px-3">
+          <div className="w-full flex justify-end md:w-full px-3">
             <button
               type="submit"
               className="bg-teal-500 hover:bg-teal-600 text-white font-bold px-4 rounded-md w-28 h-9 ease-in-out duration-300"
