@@ -33,7 +33,7 @@ const LoginPage = () => {
             src={'../../img/praying-green.png'}
           />
           <p className="mt-6 text-center text-3xl font-extrabold text-gray-700">
-            Sign in to your account
+            Sign in to Thum-Ma
           </p>
           <p className="mt-2 text-center text-sm text-gray-600">
             Or
