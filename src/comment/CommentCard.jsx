@@ -104,7 +104,7 @@ const CommentCard = ({ comment, index }) => {
   };
 
   const getUser = async () => {
-    const { data } = await AccountsApi.getById({id : comment.owner.id});
+    const { data } = await AccountsApi.getById({ id: comment.owner.id });
     setisBan(data.isBanned);
   };
 
@@ -166,7 +166,7 @@ const CommentCard = ({ comment, index }) => {
                   <HiBan />
                 </button>
               )}
-              {commentuserid == user.id && (
+              {(user.role === 'admin' || commentuserid == user.id) && (
                 <button
                   className="text-xl text-slate-500 hover:text-red-600 ease-in-out duration-300"
                   onClick={deletepost}
