@@ -14,6 +14,7 @@ const CommentCard = ({ comment, index }) => {
   const [usercomId, setUsercomId] = useState('');
   const [likecomment, setlikecomment] = useState(0);
   const [islike, setIslike] = useState(false);
+  const [togbutton,setTogbutton]=useState(false);
   useEffect(() => {
     setCommentId(comment.id.toString());
     setCommentuserId(comment.owner.id.toString());
@@ -72,6 +73,19 @@ const CommentCard = ({ comment, index }) => {
       toast.error('ไม่สามารถลบได้');
     }
   };
+//   const editpost = async () => {
+//     if (commentuserid === user.id ) {
+//       try {
+//         await CommentsApi.update({ id: commentId,commentMessage: });
+//         window.location.reload();
+//       } catch (err) {
+        
+//       }
+//     }else{
+//         toast.error("ไม่สามารถแก้ไขได้")
+//     }
+//   };
+
   return (
     <div className="flex flex-col w-full h-full bg-white max-w-full rounded-2xl px-10 py-8 mt-5 shadow-lg hover:shadow-2xl transition duration-500">
       <div className="flex flex-row justify-between">
@@ -79,6 +93,21 @@ const CommentCard = ({ comment, index }) => {
         {/* Delete Btn */}
 
         <div className="items-end">
+         {/* {togbutton ? (<button
+            className="text-white px-4 w-auto h-10 bg-yellow-400 rounded-full hover:bg-yellow-600 active:shadow-lg mouse shadow transition ease-in duration-200 focus:outline-none mr-2"
+            onClick={setTogbutton(true)}
+          >
+            edit
+          </button>):(<div>
+          <input type="text"></input>
+          <button
+            className="text-white px-4 w-auto h-10 bg-yellow-400 rounded-full hover:bg-yellow-600 active:shadow-lg mouse shadow transition ease-in duration-200 focus:outline-none mr-2"
+            onClick={setTogbutton(false)}
+          >
+            hide
+          </button> 
+          </div>  
+        )} */}
           <button
             className="text-white px-4 w-auto h-10 bg-red-600 rounded-full hover:bg-red-700 active:shadow-lg mouse shadow transition ease-in duration-200 focus:outline-none"
             onClick={deletepost}
