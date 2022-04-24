@@ -25,7 +25,7 @@ const Home = () => {
 
   return (
     <PageLayout>
-      <div className="grid grid-cols-2 justify-items-center">
+      <div className="flex flex-col items-center gap-7 h-full w-full mt-5">
         {loading ? (
           <p>loading...</p>
         ) : (
