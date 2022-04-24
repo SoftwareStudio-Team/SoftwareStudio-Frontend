@@ -5,38 +5,30 @@ import { useState } from 'react';
 import { PageLayout } from '../components';
 
 const ProfilePage = () => {
-  const { user } = useUser();
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [birthDate, setBirthDate] = useState('');
-  const changedata = async (e) => {
+  const {
+    user,
+    reducers: { update },
+  } = useUser();
+
+  const [firstName, setFirstName] = useState(user.firstName);
+  const [lastName, setLastName] = useState(user.lastName);
+  const [birthDate, setBirthDate] = useState(user.birthDate);
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-        await AccountsApi.update({ id: user.id ,firstName:firstName,lastName:lastName,birthDate:birthDate});
-
-       console.log("อัพเดทแล้ว")
-       window.location.reload()
-        
-
-        // setComment(data.comments);
-        // console.log(comment);
-      } catch (err) {
-          console.log(err)
-      }
-    
+    update({ firstName, lastName, birthDate });
   };
-  
+
   return (
     <PageLayout>
       <div className="flex flex-col w-full h-full">
         <div>{user.id}</div>
+        <div>{user.username}</div>
         <div>{user.firstName}</div>
         <div>{user.lastName}</div>
-        <div>{user.username}</div>
-        <div>{user.birthDate}</div>
         <div>{user.role}</div>
-        
-        <form  >
+
+        <form onSubmit={handleSubmit}>
           <div className="flex flex-col mb-4">
             <label
               className="mb-2 font-bold text-lg text-gray-900"
@@ -70,8 +62,8 @@ const ProfilePage = () => {
               value={lastName}
               onChange={(e) => setLastName(e.target.value)}
             />
-            </div>
-            <div className="flex flex-col mb-4">
+          </div>
+          <div className="flex flex-col mb-4">
             <label
               className="mb-2 font-bold text-lg text-gray-900"
               htmlFor="Date"
@@ -88,18 +80,14 @@ const ProfilePage = () => {
               onChange={(e) => setBirthDate(e.target.value)}
             />
           </div>
-          
+
           <button
             className="block bg-teal-400 hover:bg-teal-600 text-white  text-lg mx-auto p-4 rounded"
-            onClick={changedata}
+            type="submit"
           >
             Change Data
           </button>
-          
-          
-          
         </form>
-        
       </div>
     </PageLayout>
   );

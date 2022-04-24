@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { fetchLogin, fetchLogout } from '.';
+import { fetchLogin, fetchUpdate, fetchLogout } from '.';
 
 export const useUser = () => {
   const dispatch = useDispatch();
@@ -13,12 +13,19 @@ export const useUser = () => {
     [dispatch],
   );
 
+  const update = useCallback(
+    ({ firstName, lastName, birthDate }) =>
+      dispatch(fetchUpdate({ id: user?.id, firstName, lastName, birthDate })),
+    [dispatch],
+  );
+
   const logout = useCallback(() => dispatch(fetchLogout()), [dispatch]);
 
   return {
     user,
     reducers: {
       login,
+      update,
       logout,
     },
   };
