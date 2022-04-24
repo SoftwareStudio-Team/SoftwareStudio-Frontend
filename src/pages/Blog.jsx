@@ -1,4 +1,4 @@
-import React, { useState, useEffect,useCallback,useMemo } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { useParams } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
@@ -8,16 +8,13 @@ import { PageLayout, FeedbackCard } from '../components';
 
 import ContentsApi from '../api/contents';
 import CommentCard from '../comment/CommentCard';
-import Postcom from "../comment/Postcom"
-
+import Postcom from '../comment/Postcom';
 
 const BlogPage = () => {
   const id = useParams().id;
 
   const [blog, setBlog] = useState();
   const [loading, setLoading] = useState(false);
-  
-  
 
   useEffect(() => {
     const getBlog = async () => {
@@ -25,7 +22,7 @@ const BlogPage = () => {
         setLoading(true);
         const { data } = await ContentsApi.getById({ id });
         setBlog(data);
-        
+
         // setComment(data.comments);
         // console.log(comment);
       } catch (err) {
@@ -33,12 +30,9 @@ const BlogPage = () => {
       }
       setLoading(false);
     };
-    
+
     getBlog();
-    
   }, []);
-  
-  
 
   return (
     <PageLayout>
@@ -57,6 +51,10 @@ const BlogPage = () => {
                   >
                     {blog.contentMarkdown}
                   </ReactMarkdown>
+                  <div className="flex flex-row mt-4 justify-between items-center">
+                    <Postcom className="flex-4" idpost={id}></Postcom>
+                    <FeedbackCard likes = {blog.likes} blogid = {blog.id}/>
+                  </div>
                 </>
               ) : (
                 <div className="text-slate-400 font-bold">
@@ -66,7 +64,7 @@ const BlogPage = () => {
             </>
           )}
         </div>
-                <Postcom idpost={id}></Postcom>
+
         <div>
           {loading ? (
             <p>loading...</p>
@@ -75,15 +73,9 @@ const BlogPage = () => {
               {blog ? (
                 <>
                   <div className="w-full h-full ">
-                 
                     {blog.comments.map((data, index) => {
-                      
-                      return <CommentCard comment={data}  index={index}  />;
-                     
-                       
+                      return <CommentCard comment={data} index={index} key ={data.id} />;
                     })}
-                    
-                  
                   </div>
                 </>
               ) : (
@@ -95,7 +87,6 @@ const BlogPage = () => {
           )}
         </div>
       </div>
-      
     </PageLayout>
   );
 };

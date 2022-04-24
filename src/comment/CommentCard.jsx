@@ -2,13 +2,13 @@ import React from 'react';
 import '../pages/Blog';
 import { useEffect, useState } from 'react';
 import CommentsApi from '../api/comments';
+import AccountsApi from '../api/accounts';
 import { NavLink, useParams } from 'react-router-dom';
 import { useUser } from '../state/user/hook';
 import { toast } from 'react-toastify';
 
 const CommentCard = ({ comment, index }) => {
   const { user } = useUser();
-  console.log(comment);
   const [commentId, setCommentId] = useState('');
   const [commentuserid, setCommentuserId] = useState('');
   const [usercomId, setUsercomId] = useState('');
@@ -23,19 +23,12 @@ const CommentCard = ({ comment, index }) => {
     try {
       const { data } = await CommentsApi.getById({ id: commentId });
       setlikecomment(data[index].likes.length);
-      console.log(data);
-      // console.log(data)
       data[index].likes.forEach((userlike) => {
         if (user.id === userlike.id) {
           return setIslike(true);
         }
       });
-
-      // setComment(data.comments);
-      // console.log(comment);
-    } catch (err) {
-      //   error(err.response.data.message);
-    }
+    } catch (err) {}
   };
 
   const handlelike = async () => {
@@ -43,15 +36,9 @@ const CommentCard = ({ comment, index }) => {
       try {
         await CommentsApi.like({ id: commentId });
 
-        console.log('like สำเร็จ');
         setlikecomment(likecomment + 1);
         setIslike(true);
-
-        // setComment(data.comments);
-        // console.log(comment);
-      } catch (err) {
-        //   error(err.response.data.message);
-      }
+      } catch (err) {}
     }
   };
 
@@ -61,12 +48,7 @@ const CommentCard = ({ comment, index }) => {
         await CommentsApi.unlike({ id: commentId });
         setlikecomment(likecomment - 1);
         setIslike(false);
-        console.log('unlike สำเร็จ');
-        // setComment(data.comments);
-        // console.log(comment);
-      } catch (err) {
-        //   error(err.response.data.message);
-      }
+      } catch (err) {}
     }
   };
   const deletepost = async () => {
@@ -74,24 +56,40 @@ const CommentCard = ({ comment, index }) => {
       try {
         await CommentsApi.delete({ id: commentId });
         window.location.reload();
-      } catch (err) {
-        
-      }
-    }else{
-        toast.error("ไม่สามารถลบได้")
+      } catch (err) {}
+    } else {
+      toast.error('ไม่สามารถลบได้');
     }
   };
-
+  
+  const blockUser = async () => {
+    if (user.role === 'admin') {
+      try {
+        await AccountsApi.ban({ id: comment.owner.id });
+        window.location.reload();
+      } catch (err) {}
+    } else {
+      toast.error('ไม่สามารถลบได้');
+    }
+  };
   return (
     <div className="flex flex-col w-full h-full bg-white max-w-full rounded-2xl px-10 py-8 mt-5 shadow-lg hover:shadow-2xl transition duration-500">
       <div className="flex flex-row justify-between">
         <p className="mt-4 text-md text-gray-600">{comment.commentMessage}</p>
+        {/* Delete Btn */}
+
         <div className="items-end">
           <button
             className="text-white px-4 w-auto h-10 bg-red-600 rounded-full hover:bg-red-700 active:shadow-lg mouse shadow transition ease-in duration-200 focus:outline-none"
             onClick={deletepost}
           >
             delete
+          </button>
+          <button
+            className="text-white px-4 w-auto h-10 bg-red-600 rounded-full hover:bg-red-700 active:shadow-lg mouse shadow transition ease-in duration-200 focus:outline-none"
+            onClick={blockUser}
+          >
+            block
           </button>
         </div>
       </div>
@@ -113,7 +111,7 @@ const CommentCard = ({ comment, index }) => {
             {likecomment}
             <svg
               viewBox="0 0 20 20"
-              enable-background="new 0 0 20 20"
+              enableBackground="new 0 0 20 20"
               className="w-6 h-6 inline-block mr-1"
             >
               <path

@@ -30,7 +30,7 @@ const Home = () => {
           <p>loading...</p>
         ) : (
           blogs.map((blog) => {
-            return <BlogCard blog={blog} />;
+            return <BlogCard key={blog.id} blog={blog} />;
           })
         )}
       </div>

@@ -11,6 +11,10 @@ export const fetchLogin = createAsyncThunk(
   'user/fetchLogin',
   async ({ username, password }) => {
     const response = await UserApi.login({ username, password });
+    if(response.data.isBanned){
+      toast.error('This account has been banned');
+      return null
+    }else
     return response.data;
   },
 );

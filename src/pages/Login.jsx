@@ -2,12 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { useUser } from '../state/user/hook';
-
+import { toast } from 'react-toastify';
 const LoginPage = () => {
   const navigate = useNavigate();
   const {
     user,
-    reducers: { login },
+    reducers: { login, logout },
   } = useUser();
 
   const [username, setUsername] = useState('');
@@ -57,7 +57,7 @@ const LoginPage = () => {
                 id="username"
                 name="username"
                 type="text"
-                autocomplete="text"
+                autoComplete="text"
                 required
                 className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                 placeholder="Username"
@@ -75,7 +75,7 @@ const LoginPage = () => {
                 id="password"
                 name="password"
                 type="password"
-                autocomplete="current-password"
+                autoComplete="current-password"
                 required
                 className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                 placeholder="Password"
