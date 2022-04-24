@@ -3,11 +3,13 @@ import AccountsApi from '../api/accounts';
 import { useUser } from '../state/user/hook';
 import { useState } from 'react';
 import { PageLayout } from '../components';
+import { useNavigate } from 'react-router-dom';
 
 const ProfilePage = () => {
+  const navigate = useNavigate();
   const {
     user,
-    reducers: { update },
+    reducers: { update,logout },
   } = useUser();
 
   const [firstName, setFirstName] = useState(user.firstName);
@@ -17,6 +19,15 @@ const ProfilePage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     update({ firstName, lastName, birthDate });
+  };
+  const Deleteuser = async () => {
+    
+      try {
+        await AccountsApi.delete({ id: user.id});
+        logout()
+        navigate('/login');
+      } catch (err) {}
+    
   };
 
   return (
@@ -77,9 +88,15 @@ const ProfilePage = () => {
     
                 </div>
             </div>
+            <button
+            className="block bg-red-500 hover:bg-red-600 text-white m-auto text-lg ml-0 p-4 rounded"
+            onClick={Deleteuser}
+            
+          >
+            Delete user
+          </button>
         
-        
-        <form  >
+        <form onSubmit={handleSubmit} >
           <div className="flex flex-col mb-4">
             <label
               className="mb-2 font-bold text-lg text-gray-900"
@@ -135,11 +152,13 @@ const ProfilePage = () => {
           <button
             className="block bg-teal-400 hover:bg-teal-600 text-white  text-lg mx-auto p-4 rounded"
             type="submit"
+            
           >
             Change Data
           </button>
         </form>
       </div>
+      
     </PageLayout>
   );
 };
