@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
@@ -22,9 +22,6 @@ const BlogPage = () => {
         setLoading(true);
         const { data } = await ContentsApi.getById({ id });
         setBlog(data);
-
-        // setComment(data.comments);
-        // console.log(comment);
       } catch (err) {
         toast.error(err.response.data.message);
       }
@@ -36,57 +33,39 @@ const BlogPage = () => {
 
   return (
     <PageLayout>
-      <div className="w-full h-full p-2 overflow-x-auto break-all rounded-lg bg-slate-100 markdown">
-        <div className="flex flex-col gap-1 px-3 py-1">
-          {loading ? (
-            <p>loading...</p>
-          ) : (
-            <>
-              {blog ? (
-                <>
-                  <div className="text-3xl">{blog.title}</div>
+      {loading ? (
+        <p>loading...</p>
+      ) : (
+        <div className="w-3/5 mx-auto p-2 break-all rounded-lg markdown">
+          <div className="flex flex-col gap-1 px-3 py-1">
+            {blog && (
+              <div className="space-y-5 mb-10">
+                <div className="space-y-5 bg-slate-100 px-10 py-5 rounded-md">
+                  <div className="font-bold text-3xl">{blog.title}</div>
+                  <hr className="border border-slate-300" />
                   <ReactMarkdown
                     remarkPlugins={[remarkGfm]}
                     rehypePlugins={[rehypeRaw]}
                   >
                     {blog.contentMarkdown}
                   </ReactMarkdown>
-                  <div className="flex flex-row mt-4 justify-between items-center">
-                    <Postcom className="flex-4" idpost={id}></Postcom>
-                    <FeedbackCard likes = {blog.likes} blogid = {blog.id}/>
-                  </div>
-                </>
-              ) : (
-                <div className="text-slate-400 font-bold">
-                  Nothing to preview
+                  <FeedbackCard likes={blog.likes} blogid={blog.id} />
                 </div>
-              )}
-            </>
-          )}
-        </div>
-
-        <div>
-          {loading ? (
-            <p>loading...</p>
-          ) : (
-            <>
-              {blog ? (
-                <>
-                  <div className="w-full h-full ">
-                    {blog.comments.map((data, index) => {
-                      return <CommentCard comment={data} index={index} key ={data.id} />;
-                    })}
-                  </div>
-                </>
-              ) : (
-                <div className="text-slate-400 font-bold">
-                  Nothing to preview
+                <div className="flex flex-row justify-between items-center">
+                  <Postcom className="flex-4" idpost={id}></Postcom>
                 </div>
-              )}
-            </>
-          )}
+                <div className="w-full h-full ">
+                  {blog.comments.map((data, index) => {
+                    return (
+                      <CommentCard comment={data} index={index} key={data.id} />
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+          </div>
         </div>
-      </div>
+      )}
     </PageLayout>
   );
 };

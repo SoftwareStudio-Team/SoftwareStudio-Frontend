@@ -29,16 +29,16 @@ const LoginPage = () => {
       <div className="max-w-md w-full space-y-8">
         <div>
           <img
-            className="mx-auto h-12 w-auto"
-            src="https://static.thairath.co.th/media/4DQpjUtzLUwmJZZSCHsWfqESsCfx73Hpp9TiDFICc2wj.jpg"
+            className="mx-auto h-40 w-auto"
+            src={'../../img/praying-green.png'}
           />
-          <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-            Sign in to your account
-          </h2>
+          <p className="mt-6 text-center text-3xl font-extrabold text-gray-700">
+            Sign in to Thum-Ma
+          </p>
           <p className="mt-2 text-center text-sm text-gray-600">
             Or
             <a
-              className="font-medium text-indigo-600 hover:text-indigo-500"
+              className="font-medium text-teal-500 hover:text-teal-600 ease-in-out duration-300"
               href="/register"
             >
               {' '}
@@ -47,7 +47,6 @@ const LoginPage = () => {
           </p>
         </div>
         <form className="mt-8 space-y-6" onSubmit={handleLogin}>
-          <input type="hidden" name="remember" value="true" />
           <div className="rounded-md shadow-sm -space-y-px">
             <div>
               <label htmlFor="username" className="sr-only">
@@ -59,7 +58,7 @@ const LoginPage = () => {
                 type="text"
                 autoComplete="text"
                 required
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:z-10 sm:text-sm"
                 placeholder="Username"
                 value={username}
                 onChange={(e) => {
@@ -77,7 +76,7 @@ const LoginPage = () => {
                 type="password"
                 autoComplete="current-password"
                 required
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:z-10 sm:text-sm"
                 placeholder="Password"
                 value={password}
                 onChange={(e) => {
@@ -86,12 +85,14 @@ const LoginPage = () => {
               />
             </div>
           </div>
-          <button
-            type="submit"
-            className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-          >
-            Sign in
-          </button>
+          <div className="flex flex-row justify-center">
+            <button
+              type="submit"
+              className="bg-teal-500 hover:bg-teal-600 text-white font-bold px-4 rounded-full w-full md:w-36 h-9 ease-in-out duration-300"
+            >
+              Sign In
+            </button>
+          </div>
         </form>
       </div>
     </div>

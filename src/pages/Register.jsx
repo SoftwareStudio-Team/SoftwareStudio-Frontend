@@ -31,20 +31,17 @@ const RegisterPage = () => {
 
   return (
     <div className="flex justify-center items-center h-full w-full">
-      <div className="w-1/2 bg-white rounded shadow-2xl p-8 m-4">
-        <h1 className="block w-full text-center text-gray-800 text-2xl font-bold mb-6">
-          Register
+      <div className="w-1/2 bg-white p-8 m-4">
+        <h1 className="block w-full text-center text-2xl font-bold mb-6">
+          Sign Up
         </h1>
         <form onSubmit={handleRegister}>
           <div className="flex flex-col mb-4">
-            <label
-              className="mb-2 font-bold text-lg text-gray-900"
-              htmlFor="first_name"
-            >
+            <label className="mb-2 font-bold text-lg" htmlFor="first_name">
               First Name
             </label>
             <input
-              className="border py-2 px-3 text-grey-800"
+              className="border py-2 px-3 rounded-md outline-none"
               type="text"
               name="first_name"
               id="first_name"
@@ -54,14 +51,11 @@ const RegisterPage = () => {
             />
           </div>
           <div className="flex flex-col mb-4">
-            <label
-              className="mb-2 font-bold text-lg text-gray-900"
-              htmlFor="last_name"
-            >
+            <label className="mb-2 font-bold text-lg " htmlFor="last_name">
               Last Name
             </label>
             <input
-              className="border py-2 px-3 text-grey-800"
+              className="border py-2 px-3 rounded-md outline-none"
               type="text"
               name="last_name"
               id="last_name"
@@ -71,14 +65,11 @@ const RegisterPage = () => {
             />
           </div>
           <div className="flex flex-col mb-4">
-            <label
-              className="mb-2 font-bold text-lg text-gray-900"
-              htmlFor="username"
-            >
+            <label className="mb-2 font-bold text-lg" htmlFor="username">
               Username
             </label>
             <input
-              className="border py-2 px-3 text-grey-800"
+              className="border py-2 px-3 rounded-md outline-none"
               type="text"
               name="username"
               id="username"
@@ -88,14 +79,11 @@ const RegisterPage = () => {
             />
           </div>
           <div className="flex flex-col mb-4">
-            <label
-              className="mb-2 font-bold text-lg text-gray-900"
-              htmlFor="password"
-            >
+            <label className="mb-2 font-bold text-lg" htmlFor="password">
               Password
             </label>
             <input
-              className="border py-2 px-3 text-grey-800"
+              className="border py-2 px-3 rounded-md outline-none"
               type="password"
               name="password"
               id="password"
@@ -105,14 +93,11 @@ const RegisterPage = () => {
             />
           </div>
           <div className="flex flex-col mb-4">
-            <label
-              className="mb-2 font-bold text-lg text-gray-900"
-              htmlFor="Date"
-            >
+            <label className="mb-2 font-bold text-lg" htmlFor="Date">
               Date
             </label>
             <input
-              className="border py-2 px-3 text-grey-800"
+              className="border py-2 px-3 rounded-md outline-none"
               type="date"
               name="birthDate"
               id="birthDate"
@@ -122,14 +107,14 @@ const RegisterPage = () => {
             />
           </div>
           <button
-            className="block bg-teal-400 hover:bg-teal-600 text-white uppercase text-lg mx-auto p-4 rounded"
             type="submit"
+            className="mt-10 flex justify-center items-center mx-auto bg-teal-500 hover:bg-teal-600 text-white font-bold px-4 rounded-full w-full md:w-36 h-9 ease-in-out duration-300"
           >
-            Create Account
+            Sign Up
           </button>
         </form>
         <a
-          className="block w-full text-center no-underline mt-4 text-sm text-gray-700 hover:text-gray-900"
+          className="font-bold block w-full text-center no-underline mt-4 text-sm text-gray-500 hover:text-teal-600 ease-in-out duration-300"
           href="/login"
         >
           Already have an account?
