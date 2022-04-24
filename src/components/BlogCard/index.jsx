@@ -4,12 +4,12 @@ import { Link } from 'react-router-dom';
 const BlogCard = ({ blog }) => {
   return (
     <Link
-      className="flex flex-col w-4/5 rounded-md h-[100px] my-4"
+      className="flex flex-col w-4/5 rounded-md h-[100px] my-4 mb-20"
       to={`/blog/${blog.id}`}
     >
    
 
-      <div class="max-w-4xl px-10 my-4 py-6 bg-white rounded-lg border-2 shadow-md">
+      <div class="max-w-4xl px-10 my-4 py-6  bg-white rounded-lg border-2 shadow-md">
         <div class="flex justify-between items-center">
             <span class="font-light text-gray-600">{blog.createDate.substring(0, 10)}</span>
             
