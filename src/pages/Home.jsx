@@ -26,6 +26,10 @@ const Home = () => {
   return (
     <PageLayout>
       <div className="flex flex-col items-center gap-7 h-full w-full mt-5">
+        <div className="flex flex-col w-full items-center">
+          <p className="">Active Blog</p>
+          <hr className="w-3/5" />
+        </div>
         {loading ? (
           <p>loading...</p>
         ) : (

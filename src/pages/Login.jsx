@@ -32,7 +32,7 @@ const LoginPage = () => {
             className="mx-auto h-40 w-auto"
             src={'../../img/praying-green.png'}
           />
-          <p className="mt-6 text-center text-3xl font-extrabold text-gray-900">
+          <p className="mt-6 text-center text-3xl font-extrabold text-gray-700">
             Sign in to your account
           </p>
           <p className="mt-2 text-center text-sm text-gray-600">
@@ -47,7 +47,6 @@ const LoginPage = () => {
           </p>
         </div>
         <form className="mt-8 space-y-6" onSubmit={handleLogin}>
-          <input type="hidden" name="remember" value="true" />
           <div className="rounded-md shadow-sm -space-y-px">
             <div>
               <label htmlFor="username" className="sr-only">
@@ -59,7 +58,7 @@ const LoginPage = () => {
                 type="text"
                 autoComplete="text"
                 required
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:z-10 sm:text-sm"
                 placeholder="Username"
                 value={username}
                 onChange={(e) => {
@@ -77,7 +76,7 @@ const LoginPage = () => {
                 type="password"
                 autoComplete="current-password"
                 required
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:z-10 sm:text-sm"
                 placeholder="Password"
                 value={password}
                 onChange={(e) => {
