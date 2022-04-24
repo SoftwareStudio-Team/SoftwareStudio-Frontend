@@ -158,15 +158,14 @@ const CommentCard = ({ comment, index }) => {
                   <HiBan />
                 </button>
               )}
-              {commentuserid == user.id ||
-                (user.role === 'admin' && (
+              {(commentuserid == user.id || user.role === 'admin')&& (
                   <button
                     className="text-xl text-slate-500 hover:text-red-600 ease-in-out duration-300"
                     onClick={deletepost}
                   >
                     <MdDeleteOutline />
                   </button>
-                ))}
+                )}
             </div>
           </div>
           <div className="flex justify-between items-center">
