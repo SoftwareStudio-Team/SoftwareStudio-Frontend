@@ -130,10 +130,10 @@ const CommentCard = ({ comment, index }) => {
               delete
             </button>
             <button
-              className={user.role === 'admin' ? `${cssClass}` : `hidden`}
+              className={user.role === 'admin' && comment.owner.username !== "admin" ? `${cssClass}` : `hidden`}
               onClick={blockUser}
             >
-              block
+              ban
             </button>
             <button
               className={user.role === 'admin' ? `${cssClass}` : `hidden`}
