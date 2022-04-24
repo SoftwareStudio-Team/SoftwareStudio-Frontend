@@ -1,22 +1,24 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
+import { toast } from 'react-toastify';
 import remarkGfm from 'remark-gfm';
 import rehypeRaw from 'rehype-raw';
 
 import { PageLayout, FeedbackCard } from '../components';
 
+import { useUser } from '../state/user/hook';
 import ContentsApi from '../api/contents';
+
 import CommentCard from '../comment/CommentCard';
 import Postcom from '../comment/Postcom';
-import { useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
-import { useUser } from '../state/user/hook';
 
 const BlogPage = () => {
-  const { user } = useUser();
   const id = useParams().id;
   const navigate = useNavigate();
+
+  const { user } = useUser();
+
   const [blog, setBlog] = useState();
   const [loading, setLoading] = useState(false);
 
@@ -85,10 +87,8 @@ const BlogPage = () => {
                   <Postcom className="flex-4" idpost={id}></Postcom>
                 </div>
                 <div className="w-full h-full ">
-                  {blog.comments.map((data, index) => {
-                    return (
-                      <CommentCard comment={data} index={index} key={data.id} />
-                    );
+                  {blog.comments.map((data) => {
+                    return <CommentCard comment={data} key={data.id} />;
                   })}
                 </div>
               </div>

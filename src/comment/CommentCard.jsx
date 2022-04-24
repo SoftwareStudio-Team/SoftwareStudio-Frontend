@@ -1,136 +1,131 @@
-import React from 'react';
-import '../pages/Blog';
-import { useEffect, useState } from 'react';
-import CommentsApi from '../api/comments';
-import AccountsApi from '../api/accounts';
-
-import { useUser } from '../state/user/hook';
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-
 import {
   MdOutlineFavorite,
   MdOutlineFavoriteBorder,
   MdDeleteOutline,
 } from 'react-icons/md';
-
 import { HiEye, HiEyeOff, HiBan } from 'react-icons/hi';
 
-const CommentCard = ({ comment, index }) => {
+import CommentsApi from '../api/comments';
+import AccountsApi from '../api/accounts';
+
+import { useUser } from '../state/user/hook';
+
+const CommentCard = ({ comment }) => {
   const { user } = useUser();
-  const [commentId, setCommentId] = useState('');
-  const [commentuserid, setCommentuserId] = useState('');
-  const [likecomment, setlikecomment] = useState(0);
-  const [islike, setIslike] = useState(false);
-  const [isHidden, setisHidden] = useState();
-  const [isShow, setisShow] = useState();
+  const navigate = useNavigate();
 
-  useEffect(() => {
-    setCommentId(comment.id.toString());
-    setCommentuserId(comment.owner.id);
-    setisHidden(comment.isHid);
-    pushcomment();
-    setShowComment();
-  }, []);
+  const [commentData, setCommentData] = useState(comment);
 
-  const setShowComment = () => {
-    if (comment.isHid == true && user.role === 'member') {
-      setisShow(false);
-    } else {
-      setisShow(true);
-    }
-  };
+  const [isLike, setIsLike] = useState(true);
+  const [isHidden] = useState(comment.isHid);
 
-  const pushcomment = async () => {
-    try {
-      const { data } = await CommentsApi.getById({ id: commentId });
-      setlikecomment(data[index].likes.length);
-      data[index].likes.forEach((userlike) => {
-        if (user.id === userlike.id) {
-          return setIslike(true);
-        }
-      });
-    } catch (err) {}
+  // const pushcomment = async () => {
+  //   try {
+  //     const { data } = await CommentsApi.getById({ id: comment.id });
+
+  //     data.forEach((comments) => {
+  //       if (comments.id === comment.id) {
+  //         console.log(comments.likes);
+  //         setlikecomment(comments.likes.length);
+  //         comments.likes.forEach((userLike) => {
+  //           if (user.id === userLike.id) {
+  //             setIsLike(true);
+  //           }
+  //         });
+  //       }
+  //     });
+  //   } catch (err) {}
+  // };
+
+  const fetchCommentData = async () => {
+    const { data } = await CommentsApi.getById({ id: comment.id });
+    setCommentData(data);
   };
 
   const handlelike = async () => {
-    if (islike === false) {
-      try {
-        await CommentsApi.like({ id: commentId });
+    try {
+      await CommentsApi.like({ id: comment.id });
 
-        setlikecomment(likecomment + 1);
-        setIslike(true);
-      } catch (err) {}
-    }
+      fetchCommentData();
+    } catch (err) {}
   };
 
   const handleunlike = async () => {
-    if (islike === true) {
-      try {
-        await CommentsApi.unlike({ id: commentId });
-        setlikecomment(likecomment - 1);
-        setIslike(false);
-      } catch (err) {}
-    }
+    try {
+      await CommentsApi.unlike({ id: comment.id });
+
+      fetchCommentData();
+    } catch (err) {}
   };
-  const deletepost = async () => {
-    if (commentuserid === user.id || user.role === 'admin') {
-      try {
-        await CommentsApi.delete({ id: commentId });
-        window.location.reload();
-      } catch (err) {}
-    } else {
-      toast.error('ไม่สามารถลบได้');
+
+  const deleteComment = async () => {
+    try {
+      await CommentsApi.delete({ id: comment.id });
+      navigate(0);
+    } catch (err) {
+      toast.error('Failed to delete');
     }
   };
 
   const blockUser = async () => {
-    if (user.role === 'admin') {
-      try {
-        await AccountsApi.ban({ id: comment.owner.id });
-        window.location.reload();
-      } catch (err) {}
-    } else {
-      toast.error('ไม่สามารถลบได้');
+    try {
+      await AccountsApi.ban({ id: comment.owner.id });
+
+      fetchCommentData();
+    } catch (err) {
+      toast.error('Failed to ban');
     }
   };
 
   const hideComment = async () => {
-    if (user.role === 'admin') {
-      try {
-        await CommentsApi.hide({ id: commentId });
-        window.location.reload();
-      } catch (err) {}
-    } else {
-      toast.error('Faild');
+    try {
+      await CommentsApi.hide({ id: comment.id });
+
+      fetchCommentData();
+    } catch (err) {
+      toast.error('Failed to hide');
     }
   };
 
   const unHideComment = async () => {
-    if (user.role === 'admin') {
-      try {
-        await CommentsApi.unhide({ id: commentId });
-        window.location.reload();
-      } catch (err) {}
-    } else {
-      toast.error('Faild');
+    try {
+      await CommentsApi.unhide({ id: comment.id });
+
+      fetchCommentData();
+    } catch (err) {
+      toast.error('Failed to hide');
     }
   };
 
+  useEffect(() => {
+    setIsLike(
+      !!commentData.likes.find((likedAccount) => likedAccount.id === user.id),
+    );
+  }, [commentData]);
+
+  // fix backend bug
+  useEffect(() => {
+    fetchCommentData();
+  }, []);
+
   return (
     <>
-      {isShow && (
+      {(user.role === 'admin' || commentData.isHid != false) && (
         <div
           className={`flex flex-col w-full h-full rounded border max-w-full mt-5 transition duration-500 p-3 space-y-4 ${
-            isHidden && `opacity-50`
+            commentData.isHid && `opacity-50`
           }`}
         >
           <div className="flex flex-row justify-between">
             <div className="flex items-center space-x-4">
               <div className="text-sm font-semibold">
-                {comment.owner.username}{' '}
+                {commentData.owner.username}{' '}
                 <span className="font-normal">
                   {' '}
-                  {comment.createDate.substring(0, 10)}
+                  {commentData.createDate.substring(0, 10)}
                 </span>
               </div>
             </div>
@@ -139,12 +134,12 @@ const CommentCard = ({ comment, index }) => {
               {user.role === 'admin' && (
                 <button
                   className="text-xl text-slate-500 hover:text-red-600 ease-in-out duration-300"
-                  onClick={isHidden ? unHideComment : hideComment}
+                  onClick={commentData.isHid ? unHideComment : hideComment}
                 >
-                  {isHidden ? <HiEyeOff /> : <HiEye />}
+                  {commentData.isHid ? <HiEyeOff /> : <HiEye />}
                 </button>
               )}
-              {user.role === 'admin' && comment.owner.id !== user.id && (
+              {user.role === 'admin' && commentData.owner.id !== user.id && (
                 <button
                   className="text-xl text-slate-500 hover:text-red-600 ease-in-out duration-300"
                   onClick={blockUser}
@@ -152,10 +147,10 @@ const CommentCard = ({ comment, index }) => {
                   <HiBan />
                 </button>
               )}
-              {commentuserid == user.id && (
+              {commentData.owner.id == user.id && (
                 <button
                   className="text-xl text-slate-500 hover:text-red-600 ease-in-out duration-300"
-                  onClick={deletepost}
+                  onClick={deleteComment}
                 >
                   <MdDeleteOutline />
                 </button>
@@ -163,12 +158,14 @@ const CommentCard = ({ comment, index }) => {
             </div>
           </div>
           <div className="flex justify-between items-center">
-            <p className="text-md text-gray-600">{comment.commentMessage}</p>
+            <p className="text-md text-gray-600">
+              {commentData.commentMessage}
+            </p>
             <div className="flex items-center text-red-600 transition font-bold ease-in duration-200 text-xl">
-              <button onClick={islike ? handleunlike : handlelike}>
-                {islike ? <MdOutlineFavorite /> : <MdOutlineFavoriteBorder />}
+              <button onClick={isLike ? handleunlike : handlelike}>
+                {isLike ? <MdOutlineFavorite /> : <MdOutlineFavoriteBorder />}
               </button>
-              <p>{likecomment}</p>
+              <p>{commentData.likes.length}</p>
             </div>
           </div>
         </div>
