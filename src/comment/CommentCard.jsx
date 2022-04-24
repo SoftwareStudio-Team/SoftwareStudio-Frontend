@@ -20,7 +20,6 @@ const CommentCard = ({ comment }) => {
   const [commentData, setCommentData] = useState(comment);
 
   const [isLike, setIsLike] = useState(true);
-  const [isHidden] = useState(comment.isHid);
 
   // const pushcomment = async () => {
   //   try {
@@ -49,7 +48,7 @@ const CommentCard = ({ comment }) => {
     try {
       await CommentsApi.like({ id: comment.id });
 
-      fetchCommentData();
+      await await fetchCommentData();
     } catch (err) {}
   };
 
@@ -57,7 +56,7 @@ const CommentCard = ({ comment }) => {
     try {
       await CommentsApi.unlike({ id: comment.id });
 
-      fetchCommentData();
+      await fetchCommentData();
     } catch (err) {}
   };
 
@@ -74,7 +73,7 @@ const CommentCard = ({ comment }) => {
     try {
       await AccountsApi.ban({ id: comment.owner.id });
 
-      fetchCommentData();
+      await fetchCommentData();
     } catch (err) {
       toast.error('Failed to ban');
     }
@@ -89,7 +88,7 @@ const CommentCard = ({ comment }) => {
     try {
       await CommentsApi.hide({ id: comment.id });
 
-      fetchCommentData();
+      await fetchCommentData();
     } catch (err) {
       toast.error('Failed to hide');
     }
@@ -99,7 +98,7 @@ const CommentCard = ({ comment }) => {
     try {
       await CommentsApi.unhide({ id: comment.id });
 
-      fetchCommentData();
+      await fetchCommentData();
     } catch (err) {
       toast.error('Failed to hide');
     }
@@ -118,7 +117,7 @@ const CommentCard = ({ comment }) => {
 
   return (
     <>
-      {(user.role === 'admin' || commentData.isHid != false) && (
+      {(user.role === 'admin' || commentData.isHid == false) && (
         <div
           className={`flex flex-col w-full h-full rounded border max-w-full mt-5 transition duration-500 p-3 space-y-4 ${
             commentData.isHid && `opacity-50`
@@ -152,7 +151,7 @@ const CommentCard = ({ comment }) => {
                   <HiBan />
                 </button>
               )}
-              {(user.role === 'admin' || commentuserid == user.id) && (
+              {(user.role === 'admin' || commentData.owner.id == user.id) && (
                 <button
                   className="text-xl text-slate-500 hover:text-red-600 ease-in-out duration-300"
                   onClick={deleteComment}

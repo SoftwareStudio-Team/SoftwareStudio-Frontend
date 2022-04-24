@@ -19,9 +19,9 @@ const FeedbackCard = ({ likes, blogid }) => {
   const handleLike = async () => {
     try {
       await ContentsApi.like({ id: blogid });
-      setisLike(true);
-
+      
       const { data } = await ContentsApi.getById({ id: blogid });
+      setisLike(!!data.likes.find((likedAccount) => likedAccount.id === user.id));
       setLikeCount(data.likes.length);
     } catch (err) {
       toast.error('Failed to like');
@@ -30,10 +30,10 @@ const FeedbackCard = ({ likes, blogid }) => {
 
   const handleUnlike = async () => {
     try {
-      await ContentsApi.like({ id: blogid });
-      setisLike(true);
+      await ContentsApi.unlike({ id: blogid });
 
       const { data } = await ContentsApi.getById({ id: blogid });
+      setisLike(!!data.likes.find((likedAccount) => likedAccount.id === user.id));
       setLikeCount(data.likes.length);
     } catch (err) {
       toast.error('Failed to unlike');
