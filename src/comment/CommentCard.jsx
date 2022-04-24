@@ -79,11 +79,6 @@ const CommentCard = ({ comment }) => {
     }
   };
 
-  const getUser = async () => {
-    const { data } = await AccountsApi.getById({ id: comment.owner.id });
-    setisBan(data.isBanned);
-  };
-
   const hideComment = async () => {
     try {
       await CommentsApi.hide({ id: comment.id });
@@ -126,7 +121,11 @@ const CommentCard = ({ comment }) => {
           <div className="flex flex-row justify-between">
             <div className="flex items-center space-x-4">
               <div className="text-sm font-semibold">
-                {commentData.owner.username}{' '}
+                {commentData.owner != null ? (
+                  <p>{commentData.owner.username}</p>
+                ) : (
+                  <p className="text-red-400">This user has gone</p>
+                )}
                 <span className="font-normal">
                   {' '}
                   {commentData.createDate.substring(0, 10)}
@@ -143,7 +142,7 @@ const CommentCard = ({ comment }) => {
                   {commentData.isHid ? <HiEyeOff /> : <HiEye />}
                 </button>
               )}
-              {user.role === 'admin' && commentData.owner.id !== user.id && (
+              {user.role === 'admin' && commentData.owner?.id !== user.id && (
                 <button
                   className="text-xl text-slate-500 hover:text-red-600 ease-in-out duration-300"
                   onClick={blockUser}
@@ -151,7 +150,7 @@ const CommentCard = ({ comment }) => {
                   <HiBan />
                 </button>
               )}
-              {(user.role === 'admin' || commentData.owner.id == user.id) && (
+              {(user.role === 'admin' || commentData.owner?.id == user.id) && (
                 <button
                   className="text-xl text-slate-500 hover:text-red-600 ease-in-out duration-300"
                   onClick={deleteComment}
