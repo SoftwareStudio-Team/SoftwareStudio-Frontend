@@ -43,10 +43,16 @@ const CommentCard = ({ comment, index }) => {
   const pushcomment = async () => {
     try {
       const { data } = await CommentsApi.getById({ id: commentId });
-      setlikecomment(data[index].likes.length);
-      data[index].likes.forEach((userlike) => {
-        if (user.id === userlike.id) {
-          return setIslike(true);
+
+      data.forEach((comments) => {
+        if (comments.id === comment.id) {
+          console.log(comments.likes)
+          setlikecomment(comments.likes.length)
+          comments.likes.forEach((userLike) => {
+            if (user.id === userLike.id) {
+              setIslike(true);
+            }
+          });
         }
       });
     } catch (err) {}
@@ -152,14 +158,15 @@ const CommentCard = ({ comment, index }) => {
                   <HiBan />
                 </button>
               )}
-              {commentuserid == user.id && (
-                <button
-                  className="text-xl text-slate-500 hover:text-red-600 ease-in-out duration-300"
-                  onClick={deletepost}
-                >
-                  <MdDeleteOutline />
-                </button>
-              )}
+              {commentuserid == user.id ||
+                (user.role === 'admin' && (
+                  <button
+                    className="text-xl text-slate-500 hover:text-red-600 ease-in-out duration-300"
+                    onClick={deletepost}
+                  >
+                    <MdDeleteOutline />
+                  </button>
+                ))}
             </div>
           </div>
           <div className="flex justify-between items-center">
