@@ -15,6 +15,7 @@ const CommentCard = ({ comment, index }) => {
   const [islike, setIslike] = useState(false);
   const [isHidden, setisHidden] = useState();
   const [isShow, setisShow] = useState();
+  const [isBan, setisBan] = useState();
 
   useEffect(() => {
     setCommentId(comment.id.toString());
@@ -22,6 +23,7 @@ const CommentCard = ({ comment, index }) => {
     setisHidden(comment.isHid);
     pushcomment();
     setShowComment();
+    getUser();
   }, []);
 
   const setShowComment = () => {
@@ -77,13 +79,25 @@ const CommentCard = ({ comment, index }) => {
 
   const blockUser = async () => {
     if (user.role === 'admin') {
-      try {
-        await AccountsApi.ban({ id: comment.owner.id });
-        window.location.reload();
-      } catch (err) {}
+      if (isBan == true) {
+        try {
+          await AccountsApi.unban({ id: comment.owner.id });
+          window.location.reload();
+        } catch (err) {}
+      } else {
+        try {
+          await AccountsApi.ban({ id: comment.owner.id });
+          window.location.reload();
+        } catch (err) {}
+      }
     } else {
       toast.error('ไม่สามารถลบได้');
     }
+  };
+
+  const getUser = async () => {
+    const { data } = await AccountsApi.getById({id : comment.owner.id});
+    setisBan(data.isBanned);
   };
 
   const hideComment = async () => {
@@ -130,10 +144,14 @@ const CommentCard = ({ comment, index }) => {
               delete
             </button>
             <button
-              className={user.role === 'admin' && comment.owner.username !== "admin" ? `${cssClass}` : `hidden`}
+              className={
+                user.role === 'admin' && comment.owner.username !== 'admin'
+                  ? `${cssClass}`
+                  : `hidden`
+              }
               onClick={blockUser}
             >
-              ban
+              {isBan ? `Unban` : `ban`}
             </button>
             <button
               className={user.role === 'admin' ? `${cssClass}` : `hidden`}
