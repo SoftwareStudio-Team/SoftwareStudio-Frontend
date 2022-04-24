@@ -120,7 +120,7 @@ const CommentCard = ({ comment, index }) => {
     <>
       {isShow && (
         <div
-          className={`flex flex-col w-full h-full rounded border max-w-full mt-5 transition duration-500 p-3 space-y-3 ${
+          className={`flex flex-col w-full h-full rounded border max-w-full mt-5 transition duration-500 p-3 space-y-4 ${
             isHidden && `opacity-50`
           }`}
         >
@@ -135,18 +135,22 @@ const CommentCard = ({ comment, index }) => {
               </div>
             </div>
             {/* Delete Btn */}
-            <div className="flex flex-row justify-center items-center space-x-2">
+            <div className="flex flex-row justify-center items-center space-x-1">
               {user.role === 'admin' && (
-                <div className="flex flex-row items-center text-xl text-slate-500 hover:text-red-600 ease-in-out duration-300">
-                  <button onClick={isHidden ? unHideComment : hideComment}>
-                    {isHidden ? <HiEyeOff /> : <HiEye />}
-                  </button>
-                  {comment.owner.id !== user.id && (
-                    <button onClick={blockUser}>
-                      <HiBan />
-                    </button>
-                  )}
-                </div>
+                <button
+                  className="text-xl text-slate-500 hover:text-red-600 ease-in-out duration-300"
+                  onClick={isHidden ? unHideComment : hideComment}
+                >
+                  {isHidden ? <HiEyeOff /> : <HiEye />}
+                </button>
+              )}
+              {user.role === 'admin' && comment.owner.id !== user.id && (
+                <button
+                  className="text-xl text-slate-500 hover:text-red-600 ease-in-out duration-300"
+                  onClick={blockUser}
+                >
+                  <HiBan />
+                </button>
               )}
               {commentuserid == user.id && (
                 <button

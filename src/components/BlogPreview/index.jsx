@@ -5,7 +5,7 @@ import rehypeRaw from 'rehype-raw';
 
 const BlogPreview = ({ title, contentMarkdown }) => {
   return (
-    <div className="w-full p-2 overflow-x-auto break-all rounded-lg bg-slate-100 markdown">
+    <div className="p-2 overflow-x-auto break-all rounded-lg bg-slate-100 markdown">
       <div className="flex flex-col gap-1 px-3 py-1">
         {title || contentMarkdown ? (
           <div>
