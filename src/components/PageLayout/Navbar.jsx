@@ -22,7 +22,7 @@ const Navbar = () => {
 
   return (
     <div className="fixed top-0 z-10 flex flex-row justify-between items-center w-full h-20 px-10 bg-gray-400">
-      <div>Software Studio</div>
+      <Link to="/"><div>Software Studio</div></Link>
       <div className="flex flex-row space-x-2">
         {user.role == 'admin' && (
           <Link
