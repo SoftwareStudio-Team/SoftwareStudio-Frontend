@@ -2,12 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { useUser } from '../state/user/hook';
-import { toast } from 'react-toastify';
+
 const LoginPage = () => {
   const navigate = useNavigate();
   const {
     user,
-    reducers: { login, logout },
+    reducers: { login },
   } = useUser();
 
   const [username, setUsername] = useState('');
