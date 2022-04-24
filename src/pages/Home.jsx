@@ -1,13 +1,18 @@
 import React, { useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 import { PageLayout, BlogCard } from '../components';
 
 import ContentsApi from '../api/contents';
+import { MdOutlineAddCircleOutline } from 'react-icons/md';
+
+import { useUser } from '../state/user/hook';
 
 const Home = () => {
   const [blogs, setBlogs] = useState([]);
   const [loading, setLoading] = useState(false);
+  const { user } = useUser();
 
   useEffect(() => {
     const getBlogs = async () => {
@@ -27,8 +32,19 @@ const Home = () => {
     <PageLayout>
       <div className="flex flex-col items-center gap-7 h-full w-full mt-5">
         <div className="flex flex-col w-full items-center">
-          <p className="">Active Blog</p>
-          <hr className="w-3/5" />
+          <div className="flex flex-row items-center justify-between w-3/5">
+            <p className="font-bold text-2xl text-slate-500">Active Blog</p>
+            {user.role == 'admin' && (
+              <Link
+                className="flex flex-row items-center gap-1 bg-amber-400 hover:bg-amber-500 text-white font-bold px-3 rounded-md w-22 h-8 ease-in-out duration-300"
+                to="/createBlog"
+              >
+                <MdOutlineAddCircleOutline />
+                Post
+              </Link>
+            )}
+          </div>
+          <hr className="w-3/5 mt-5" />
         </div>
         {loading ? (
           <p>loading...</p>
