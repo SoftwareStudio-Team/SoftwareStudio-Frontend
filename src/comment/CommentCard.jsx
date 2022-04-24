@@ -142,14 +142,16 @@ const CommentCard = ({ comment }) => {
                   {commentData.isHid ? <HiEyeOff /> : <HiEye />}
                 </button>
               )}
-              {user.role === 'admin' && commentData.owner?.id !== user.id && (
-                <button
-                  className="text-xl text-slate-500 hover:text-red-600 ease-in-out duration-300"
-                  onClick={blockUser}
-                >
-                  <HiBan />
-                </button>
-              )}
+              {user.role === 'admin' &&
+                commentData.owner?.id !== user.id &&
+                commentData.owner != null && (
+                  <button
+                    className="text-xl text-slate-500 hover:text-red-600 ease-in-out duration-300"
+                    onClick={blockUser}
+                  >
+                    <HiBan />
+                  </button>
+                )}
               {(user.role === 'admin' || commentData.owner?.id == user.id) && (
                 <button
                   className="text-xl text-slate-500 hover:text-red-600 ease-in-out duration-300"
