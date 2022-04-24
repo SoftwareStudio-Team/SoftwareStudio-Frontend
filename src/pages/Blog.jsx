@@ -22,9 +22,6 @@ const BlogPage = () => {
         setLoading(true);
         const { data } = await ContentsApi.getById({ id });
         setBlog(data);
-
-        // setComment(data.comments);
-        // console.log(comment);
       } catch (err) {
         toast.error(err.response.data.message);
       }

@@ -29,9 +29,8 @@ const LoginPage = () => {
       <div className="max-w-md w-full space-y-8">
         <div>
           <img
-            className="mx-auto h-12 w-auto"
-            // src={'./'}
-            src="https://static.thairath.co.th/media/4DQpjUtzLUwmJZZSCHsWfqESsCfx73Hpp9TiDFICc2wj.jpg"
+            className="mx-auto h-40 w-auto"
+            src={'../../img/praying-green.png'}
           />
           <p className="mt-6 text-center text-3xl font-extrabold text-gray-900">
             Sign in to your account
