@@ -7,6 +7,14 @@ import AccountsApi from '../api/accounts';
 import { useUser } from '../state/user/hook';
 import { toast } from 'react-toastify';
 
+import {
+  MdOutlineFavorite,
+  MdOutlineFavoriteBorder,
+  MdDeleteOutline,
+} from 'react-icons/md';
+
+import { HiEye, HiEyeOff, HiBan } from 'react-icons/hi';
+
 const CommentCard = ({ comment, index }) => {
   const { user } = useUser();
   const [commentId, setCommentId] = useState('');
@@ -18,7 +26,7 @@ const CommentCard = ({ comment, index }) => {
 
   useEffect(() => {
     setCommentId(comment.id.toString());
-    setCommentuserId(comment.owner.id.toString());
+    setCommentuserId(comment.owner.id);
     setisHidden(comment.isHid);
     pushcomment();
     setShowComment();
@@ -93,7 +101,7 @@ const CommentCard = ({ comment, index }) => {
         window.location.reload();
       } catch (err) {}
     } else {
-      toast.error('ไม่สามารถลบได้');
+      toast.error('Faild');
     }
   };
 
@@ -104,77 +112,64 @@ const CommentCard = ({ comment, index }) => {
         window.location.reload();
       } catch (err) {}
     } else {
-      toast.error('ไม่สามารถลบได้');
+      toast.error('Faild');
     }
   };
 
-  const cssClass =
-    'text-white px-4 w-auto h-10 bg-red-600 rounded-full hover:bg-red-700 active:shadow-lg mouse shadow transition ease-in duration-200 focus:outline-none';
-
   return (
-    <div className={isShow ? `visible` : `hidden`}>
-      <div className="flex flex-col w-full h-full bg-white max-w-full rounded-2xl px-10 py-8 mt-5 shadow-lg hover:shadow-2xl transition duration-500">
-        <div className="flex flex-row justify-between">
-          <p className="mt-4 text-md text-gray-600">{comment.commentMessage}</p>
-          {/* Delete Btn */}
-
-          <div className="items-end">
-            <button
-              className={
-                commentuserid === user.id || user.role === 'admin'
-                  ? `${cssClass}`
-                  : `hidden`
-              }
-              onClick={deletepost}
-            >
-              delete
-            </button>
-            <button
-              className={user.role === 'admin' && comment.owner.username !== "admin" ? `${cssClass}` : `hidden`}
-              onClick={blockUser}
-            >
-              ban
-            </button>
-            <button
-              className={user.role === 'admin' ? `${cssClass}` : `hidden`}
-              onClick={isHidden ? unHideComment : hideComment}
-            >
-              {isHidden ? `UnHide` : `Hide`}
-            </button>
-          </div>
-        </div>
-        <div className="flex justify-between items-center">
-          <div className="mt-4 flex items-center space-x-4 py-6">
-            <div className="text-sm font-semibold">
-              {comment.owner.username}{' '}
-              <span className="font-normal">
-                {' '}
-                {comment.createDate.substring(0, 10)}
-              </span>
+    <>
+      {isShow && (
+        <div
+          className={`flex flex-col w-full h-full rounded border max-w-full mt-5 transition duration-500 p-3 space-y-3 ${
+            isHidden && `opacity-50`
+          }`}
+        >
+          <div className="flex flex-row justify-between">
+            <div className="flex items-center space-x-4">
+              <div className="text-sm font-semibold">
+                {comment.owner.username}{' '}
+                <span className="font-normal">
+                  {' '}
+                  {comment.createDate.substring(0, 10)}
+                </span>
+              </div>
+            </div>
+            {/* Delete Btn */}
+            <div className="flex flex-row justify-center items-center space-x-2">
+              {user.role === 'admin' && (
+                <div className="flex flex-row items-center text-xl text-slate-500 hover:text-red-600 ease-in-out duration-300">
+                  <button onClick={isHidden ? unHideComment : hideComment}>
+                    {isHidden ? <HiEyeOff /> : <HiEye />}
+                  </button>
+                  {comment.owner.id !== user.id && (
+                    <button onClick={blockUser}>
+                      <HiBan />
+                    </button>
+                  )}
+                </div>
+              )}
+              {commentuserid == user.id && (
+                <button
+                  className="text-xl text-slate-500 hover:text-red-600 ease-in-out duration-300"
+                  onClick={deletepost}
+                >
+                  <MdDeleteOutline />
+                </button>
+              )}
             </div>
           </div>
-          <div className="">
-            <button
-              className="text-white px-4 w-auto h-10 bg-red-600 rounded-full hover:bg-red-700 active:shadow-lg mouse shadow transition ease-in duration-200 focus:outline-none"
-              onClick={islike ? handleunlike : handlelike}
-            >
-              {likecomment}
-              <svg
-                viewBox="0 0 20 20"
-                enableBackground="new 0 0 20 20"
-                className="w-6 h-6 inline-block mr-1"
-              >
-                <path
-                  fill="#FFFFFF"
-                  d="M17.19,4.155c-1.672-1.534-4.383-1.534-6.055,0L10,5.197L8.864,4.155c-1.672-1.534-4.382-1.534-6.054,0
-                                    c-1.881,1.727-1.881,4.52,0,6.246L10,17l7.19-6.599C19.07,8.675,19.07,5.881,17.19,4.155z"
-                />
-              </svg>
-            </button>
+          <div className="flex justify-between items-center">
+            <p className="text-md text-gray-600">{comment.commentMessage}</p>
+            <div className="flex items-center text-red-600 transition font-bold ease-in duration-200 text-xl">
+              <button onClick={islike ? handleunlike : handlelike}>
+                {islike ? <MdOutlineFavorite /> : <MdOutlineFavoriteBorder />}
+              </button>
+              <p>{likecomment}</p>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
+      )}
+    </>
   );
 };
 export default CommentCard;

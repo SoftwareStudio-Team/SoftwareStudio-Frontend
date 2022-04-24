@@ -9,7 +9,7 @@ import { MdOutlineFavorite, MdTextsms } from 'react-icons/md';
 const BlogCard = ({ blog }) => {
   return (
     <Link
-      className="flex flex-col w-full h-96 rounded-md px-10 py-6 bg-white border markdown"
+      className="flex flex-col w-full max-h-96 rounded-md px-10 py-6 bg-white border markdown"
       to={`/blog/${blog.id}`}
     >
       <div class="flex flex-row items-center justify-between">
