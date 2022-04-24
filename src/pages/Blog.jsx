@@ -5,13 +5,15 @@ import { toast } from 'react-toastify';
 import remarkGfm from 'remark-gfm';
 import rehypeRaw from 'rehype-raw';
 
-import { PageLayout, FeedbackCard } from '../components';
+import {
+  PageLayout,
+  FeedbackCard,
+  CommentCard,
+  CreateCommentCard,
+} from '../components';
 
 import { useUser } from '../state/user/hook';
 import ContentsApi from '../api/contents';
-
-import CommentCard from '../comment/CommentCard';
-import Postcom from '../comment/Postcom';
 
 const BlogPage = () => {
   const id = useParams().id;
@@ -84,7 +86,10 @@ const BlogPage = () => {
                   </div>
                 )}
                 <div className="flex flex-row justify-between items-center">
-                  <Postcom className="flex-4" idpost={id}></Postcom>
+                  <CreateCommentCard
+                    className="flex-4"
+                    idpost={id}
+                  ></CreateCommentCard>
                 </div>
                 <div className="w-full h-full ">
                   {blog.comments.map((data) => {

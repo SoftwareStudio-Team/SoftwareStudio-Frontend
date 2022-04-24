@@ -8,10 +8,10 @@ import {
 } from 'react-icons/md';
 import { HiEye, HiEyeOff, HiBan } from 'react-icons/hi';
 
-import CommentsApi from '../api/comments';
-import AccountsApi from '../api/accounts';
+import CommentsApi from '../../api/comments';
+import AccountsApi from '../../api/accounts';
 
-import { useUser } from '../state/user/hook';
+import { useUser } from '../../state/user/hook';
 
 const CommentCard = ({ comment }) => {
   const { user } = useUser();
@@ -19,25 +19,9 @@ const CommentCard = ({ comment }) => {
 
   const [commentData, setCommentData] = useState(comment);
 
-  const [isLike, setIsLike] = useState(true);
-
-  // const pushcomment = async () => {
-  //   try {
-  //     const { data } = await CommentsApi.getById({ id: comment.id });
-
-  //     data.forEach((comments) => {
-  //       if (comments.id === comment.id) {
-  //         console.log(comments.likes);
-  //         setlikecomment(comments.likes.length);
-  //         comments.likes.forEach((userLike) => {
-  //           if (user.id === userLike.id) {
-  //             setIsLike(true);
-  //           }
-  //         });
-  //       }
-  //     });
-  //   } catch (err) {}
-  // };
+  const [isLike, setIsLike] = useState(
+    !!comment.likes.find((likedAccount) => likedAccount.id === user.id),
+  );
 
   const fetchCommentData = async () => {
     const { data } = await CommentsApi.getById({ id: comment.id });
@@ -48,7 +32,7 @@ const CommentCard = ({ comment }) => {
     try {
       await CommentsApi.like({ id: comment.id });
 
-      await await fetchCommentData();
+      await fetchCommentData();
     } catch (err) {}
   };
 
@@ -104,11 +88,6 @@ const CommentCard = ({ comment }) => {
       !!commentData.likes.find((likedAccount) => likedAccount.id === user.id),
     );
   }, [commentData]);
-
-  // fix backend bug
-  useEffect(() => {
-    fetchCommentData();
-  }, []);
 
   return (
     <>

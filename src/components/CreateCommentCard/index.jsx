@@ -1,41 +1,31 @@
 import React from 'react';
-import { useUser } from '../state/user/hook';
 import { useState } from 'react';
-import axios from 'axios';
-function Postcom(props) {
-  const { idpost } = props;
+import { toast } from 'react-toastify';
+
+import { useUser } from '../../state/user/hook';
+
+import CommentsApi from '../../api/comments';
+import { useNavigate } from 'react-router-dom';
+
+const CreateCommentCard = ({ idpost }) => {
+  const navigate = useNavigate();
+
   const { user } = useUser();
 
   const [commentMessage, setCommentMessage] = useState('');
-  const contentId = '';
-  const ownerId = '';
-
-  const [error, setError] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError(false);
-    console.log(commentMessage, contentId, ownerId);
     try {
-      const res = await axios.post(
-        'https://161.246.6.18:8880/api/Comments',
-        {
-          //ไม่แน่ใจบรรทัดนี้
+      await CommentsApi.create({
+        commentMessage: commentMessage,
+        contentId: idpost,
+        ownerId: user.id,
+      });
 
-          commentMessage: commentMessage,
-          contentId: idpost,
-          ownerId: user.id,
-        },
-        {
-          withCredentials: true,
-          headers: { 'Content-Type': 'application/json' },
-        },
-      );
-      console.log('commentสำเร็จ');
-
-      res.data && window.location.reload();
+      navigate(0);
     } catch (err) {
-      setError(true);
+      toast.error('Failed to comment');
     }
   };
 
@@ -70,5 +60,5 @@ function Postcom(props) {
       </form>
     </div>
   );
-}
-export default Postcom;
+};
+export default CreateCommentCard;
