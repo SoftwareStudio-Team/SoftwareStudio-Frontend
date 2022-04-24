@@ -22,13 +22,64 @@ const ProfilePage = () => {
   return (
     <PageLayout>
       <div className="flex flex-col w-full h-full">
-        <div>{user.id}</div>
-        <div>{user.username}</div>
-        <div>{user.firstName}</div>
-        <div>{user.lastName}</div>
-        <div>{user.role}</div>
-
-        <form onSubmit={handleSubmit}>
+        <div class="w-96 h-56 m-auto bg-red-100 rounded-xl relative text-white shadow-2xl transition-transform transform hover:scale-110">
+                
+                <img class="relative object-cover w-[550px] h-[250px] rounded-xl" src="https://i.imgur.com/Zi6v09P.png"/>
+                
+                <div class="w-full px-8 absolute top-8">
+                    <div class="flex justify-between " >
+                        <div class="">
+                            <p class="font-light">
+                                Username
+                            </p>
+                            <p class="font-medium tracking-widest">
+                              {user.username}
+                            </p>
+                            <p class="font-light">
+                                firstname lastname
+                            </p>
+                            <p class=" flex flex-row space-x-2 font-medium tracking-widest">
+                            <div>{user.firstName}</div><div>{user.lastName}</div>
+                            </p>
+                        </div>
+                        <img class="w-14 h-14" src="https://files.gathersheet.com/images/sticker/festival/loy-kratong-festival-2017/%E0%B8%A7%E0%B8%B1%E0%B8%94.png"/>
+                    </div>
+                    <div class="pt-1">
+                        <p class="font-light">
+                            Card Number
+                        </p>
+                        <p class="font-medium tracking-more-wider">
+                         {user.id}
+                        </p>
+                    </div>
+                    <div class="pt-6 pr-6">
+                        <div class="flex justify-between">
+                            <div class="">
+                                <p class="font-light text-xs">
+                                    birthday
+                                </p>
+                                <p class="font-medium tracking-wider text-sm">
+                                  {user.birthDate.substring(0, 10)}
+                                </p>
+                            </div>
+                            <div class="">
+                                <p class="font-light text-xs text-xs">
+                                    role
+                                </p>
+                                <p class="font-medium tracking-wider text-sm">
+                                  {user.role}
+                                </p>
+                            </div>
+    
+                           
+                        </div>
+                    </div>
+    
+                </div>
+            </div>
+        
+        
+        <form  >
           <div className="flex flex-col mb-4">
             <label
               className="mb-2 font-bold text-lg text-gray-900"
