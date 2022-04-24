@@ -1,43 +1,38 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
+import rehypeRaw from 'rehype-raw';
+
+import { MdOutlineFavorite, MdTextsms } from 'react-icons/md';
 
 const BlogCard = ({ blog }) => {
   return (
     <Link
-      class="flex flex-col w-full rounded-md w-3/5 px-10 py-6 bg-white rounded-lg border-2 shadow-md"
+      className="flex flex-col w-full h-96 rounded-md px-10 py-6 bg-white border markdown"
       to={`/blog/${blog.id}`}
     >
-      <div class="flex justify-between items-center">
-        <span class="font-light text-gray-600">
-          {blog.createDate.substring(0, 10)}
-        </span>
-      </div>
-      <div class="mt-2">
-        <a class="text-2xl text-gray-700 font-bold hover:text-gray-600">
+      <div class="flex flex-row items-center justify-between">
+        <p class="text-2xl text-gray-700 font-bold hover:text-gray-600">
           {blog.title}
-        </a>
+        </p>
+        <p class="font-light text-gray-600">
+          {blog.createDate.substring(0, 10)}
+        </p>
       </div>
-      <div class="flex justify-between items-center mt-4">
-        <a class="text-blue-600 hover:underline">
-          <button className="text-white px-4 w-auto h-10 bg-red-600 rounded-full ">
-            {blog.likes.length}
-            <svg
-              viewBox="0 0 20 20"
-              enableBackground="new 0 0 20 20"
-              className="w-6 h-6 inline-block mr-1"
-            >
-              <path
-                fill="#FFFFFF"
-                d="M17.19,4.155c-1.672-1.534-4.383-1.534-6.055,0L10,5.197L8.864,4.155c-1.672-1.534-4.382-1.534-6.054,0
-                                    c-1.881,1.727-1.881,4.52,0,6.246L10,17l7.19-6.599C19.07,8.675,19.07,5.881,17.19,4.155z"
-              />
-            </svg>
-          </button>
-        </a>
-        <div>
-          <a class="flex items-center">
-            <h1 class="text-gray-700 font-bold">Admin</h1>
-          </a>
+      <div className="overflow-y-hidden">
+        <ReactMarkdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeRaw]}>
+          {blog.contentMarkdown}
+        </ReactMarkdown>
+      </div>
+      <div className="flex space-x-2 items-center mt-4 ">
+        <div className="flex items-center text-red-600 font-bold">
+          <MdOutlineFavorite />
+          <p>{blog.likes.length}</p>
+        </div>
+        <div className="flex items-center space-x-0.5 text-slate-600 font-bold">
+          <MdTextsms />
+          <p>{blog.comments.length}</p>
         </div>
       </div>
     </Link>

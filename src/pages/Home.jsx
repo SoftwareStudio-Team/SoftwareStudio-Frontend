@@ -30,9 +30,9 @@ const Home = () => {
 
   return (
     <PageLayout>
-      <div className="flex flex-col items-center gap-7 h-full w-full mt-5">
+      <div className="flex flex-col items-center gap-7 h-full w-3/5 mt-5 mx-auto">
         <div className="flex flex-col w-full items-center">
-          <div className="flex flex-row items-center justify-between w-3/5">
+          <div className="flex flex-row items-center justify-between w-full">
             <p className="font-bold text-2xl text-slate-500">Active Blog</p>
             {user.role == 'admin' && (
               <Link
@@ -44,7 +44,7 @@ const Home = () => {
               </Link>
             )}
           </div>
-          <hr className="w-3/5 mt-5" />
+          <hr className="w-full mt-5" />
         </div>
         {loading ? (
           <p>loading...</p>
