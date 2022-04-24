@@ -166,8 +166,15 @@ const CommentCard = ({ comment }) => {
             <p className="text-md text-gray-600">
               {commentData.commentMessage}
             </p>
-            <div className="flex items-center text-red-600 transition font-bold ease-in duration-200 text-xl">
-              <button onClick={isLike ? handleunlike : handlelike}>
+            <div
+              className={`flex items-center text-red-600 transition font-bold ease-in duration-200 text-xl ${
+                !commentData.owner && 'opacity-50'
+              }`}
+            >
+              <button
+                onClick={isLike ? handleunlike : handlelike}
+                disabled={!commentData.owner}
+              >
                 {isLike ? <MdOutlineFavorite /> : <MdOutlineFavoriteBorder />}
               </button>
               <p>{commentData.likes.length}</p>
