@@ -9,12 +9,25 @@ import { PageLayout, FeedbackCard } from '../components';
 import ContentsApi from '../api/contents';
 import CommentCard from '../comment/CommentCard';
 import Postcom from '../comment/Postcom';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import { useUser } from '../state/user/hook';
 
 const BlogPage = () => {
+  const { user } = useUser();
   const id = useParams().id;
-
+  const navigate = useNavigate();
   const [blog, setBlog] = useState();
   const [loading, setLoading] = useState(false);
+
+  const handleDelete = async () => {
+    try {
+      await ContentsApi.delete({ id });
+      navigate(`/`);
+    } catch (err) {
+      toast.error('Failed to delete');
+    }
+  };
 
   useEffect(() => {
     const getBlog = async () => {
@@ -51,6 +64,23 @@ const BlogPage = () => {
                   </ReactMarkdown>
                   <FeedbackCard likes={blog.likes} blogid={blog.id} />
                 </div>
+                {user.role === 'admin' && (
+                  <div className="flex flex-row justify-between items-center w-full h-16 rounded-md border-red-500 border-2 px-4 my-10">
+                    <div className="flex flex-col">
+                      <p className="font-bold ">Delete this blog</p>
+                      <p className="text-sm">
+                        Once you delete account, there is no going back. Please
+                        be certain.
+                      </p>
+                    </div>
+                    <button
+                      className="bg-red-500 hover:bg-red-700 text-white font-bold px-4 rounded-md w-32 h-9 ease-in-out duration-300"
+                      onClick={handleDelete}
+                    >
+                      Delete blog
+                    </button>
+                  </div>
+                )}
                 <div className="flex flex-row justify-between items-center">
                   <Postcom className="flex-4" idpost={id}></Postcom>
                 </div>

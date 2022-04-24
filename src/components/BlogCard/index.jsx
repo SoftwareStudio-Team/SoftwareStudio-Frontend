@@ -12,11 +12,11 @@ const BlogCard = ({ blog }) => {
       className="flex flex-col w-full max-h-96 rounded-md px-10 py-6 bg-white border markdown"
       to={`/blog/${blog.id}`}
     >
-      <div class="flex flex-row items-center justify-between">
+      <div class="flex flex-row items-start justify-between space-x-2">
         <p class="text-2xl text-gray-700 font-bold hover:text-gray-600">
           {blog.title}
         </p>
-        <p class="font-light text-gray-600">
+        <p class="font-light text-gray-600 min-w-max pt-2">
           {blog.createDate.substring(0, 10)}
         </p>
       </div>
